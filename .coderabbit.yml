@@ -1,0 +1,51 @@
+language: "en-US"
+tone_instructions: "You are an expert Next.js and TypeScript code reviewer. Be concise and clear."
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  path_instructions:
+    - path: "app/**"
+      instructions: |
+        Review for Next.js App Router best practices.
+        Check Server vs Client component usage.
+        Ensure proper use of layout.tsx and page.tsx.
+        Flag unnecessary 'use client' directives.
+
+    - path: "components/**"
+      instructions: |
+        Check for reusability and proper prop typing.
+        Ensure accessibility (aria labels, semantic HTML).
+        Flag direct DOM manipulation.
+
+    - path: "hooks/**"
+      instructions: |
+        Check for proper cleanup in useEffect.
+        Ensure hooks follow Rules of Hooks.
+        Flag any memory leaks.
+
+    - path: "lib/**"
+      instructions: |
+        Review utility functions for edge cases.
+        Check for proper TypeScript types.
+
+    - path: "services/**"
+      instructions: |
+        Ensure all API calls handle errors properly.
+        Flag missing loading/error states returned to the caller.
+        Check base URLs and endpoints are using environment variables, not hardcoded.
+        Warn if response data is used without validation or typing.
+
+  tools:
+    eslint:
+      enabled: true
+    github-checks:
+      enabled: true
+
+chat:
+  auto_reply: true
