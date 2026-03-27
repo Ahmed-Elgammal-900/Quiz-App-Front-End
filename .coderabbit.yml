@@ -9,6 +9,10 @@ reviews:
   review_status: true
   collapse_walkthrough: false
 
+  base_branches:
+    - "main"
+    - "dev"
+
   path_instructions:
     - path: "app/**"
       instructions: |
