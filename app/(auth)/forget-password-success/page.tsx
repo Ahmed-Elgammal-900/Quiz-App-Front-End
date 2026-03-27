@@ -26,7 +26,7 @@ export default function ForgetPasswordSuccess() {
           follow the instructions.
         </p>
         <p className="text-xs text-muted-foreground">
-          Didn't receive it? Check your spam folder.
+          Didn&apos;t receive it? Check your spam folder.
         </p>
 
         <Link

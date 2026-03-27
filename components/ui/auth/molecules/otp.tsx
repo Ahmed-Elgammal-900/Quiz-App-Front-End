@@ -8,13 +8,11 @@ import { cn } from "@/lib/utils"
 export default function OTP({ otpError }: { otpError: string | undefined }) {
   const [otp, setOtp] = useState("")
   const [timer, setTimer] = useState(60)
-  const [canResend, setCanResend] = useState(false)
+
+  const canResend = timer === 0
 
   useEffect(() => {
-    if (timer === 0) {
-      setCanResend(true)
-      return
-    }
+    if (timer === 0) return
 
     const interval = setInterval(() => {
       setTimer((prev) => prev - 1)
@@ -25,7 +23,6 @@ export default function OTP({ otpError }: { otpError: string | undefined }) {
 
   const handleResend = async () => {
     setTimer(60)
-    setCanResend(false)
     await resendOtpAction()
   }
 
@@ -56,7 +53,7 @@ export default function OTP({ otpError }: { otpError: string | undefined }) {
       </Field>
       <div className="my-10 mt-4 flex flex-col items-center justify-center gap-1">
         <span className="text-center text-sm text-muted-foreground">
-          Didn't receive the code?
+          Didn&apos;t receive the code?
         </span>
         <div className="h-10">
           {canResend ? (
