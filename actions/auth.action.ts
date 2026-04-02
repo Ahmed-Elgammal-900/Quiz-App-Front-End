@@ -176,13 +176,14 @@ export async function forgetPasswordAction(
 }
 
 export async function resetPasswordAction(
+  token: string,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
   const raw = {
     password: formData.get("password") as string,
     confirmPassword: formData.get("confirm-password") as string,
-    resetToken: formData.get("token") as string,
+    resetToken: token,
   }
 
   const parsed = resetPasswordSchema.safeParse(raw)

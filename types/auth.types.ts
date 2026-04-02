@@ -21,6 +21,6 @@ export type AuthVariant =
 
 export interface AuthFormProps {
   variant: AuthVariant
-  action: (_prevState: ActionState, formData: FormData) => Promise<ActionState>
+  action: any
   token?: string
 }
