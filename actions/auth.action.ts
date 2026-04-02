@@ -23,6 +23,7 @@ import { ActionState } from "@/types/auth.types"
 import { parseSetCookieHeader } from "@/utils/cookie"
 
 export async function registerAction(
+  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -69,6 +70,7 @@ export async function registerAction(
 }
 
 export async function loginAction(
+  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -132,6 +134,7 @@ export async function loginAction(
 }
 
 export async function forgetPasswordAction(
+  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -176,7 +179,7 @@ export async function forgetPasswordAction(
 }
 
 export async function resetPasswordAction(
-  token: string,
+  token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -241,6 +244,7 @@ export async function resetPasswordAction(
 }
 
 export async function verifyOtpAction(
+  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -330,6 +334,7 @@ export async function resendOtpAction(): Promise<ActionState> {
 }
 
 export async function changePasswordAction(
+  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
