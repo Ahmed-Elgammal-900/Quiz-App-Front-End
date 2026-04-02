@@ -12,7 +12,12 @@ import { FormFields } from "@/utils/auth-field-generator"
 
 export default function AuthForm({ variant, action, token }: AuthFormProps) {
   const boundAction =
-    variant === "resetPassword" ? action.bind(null, token ?? "") : action
+    variant === "resetPassword"
+      ? (action as (...args: unknown[]) => Promise<ActionState>).bind(
+          null,
+          token ?? ""
+        )
+      : action
   const [state, formAction, isPending] = useActionState<ActionState, FormData>(
     boundAction as (
       _prevState: ActionState,
