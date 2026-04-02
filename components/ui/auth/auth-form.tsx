@@ -11,15 +11,27 @@ import { VARIANT_CONFIG } from "@/config/auth.config"
 import { FormFields } from "@/utils/auth-field-generator"
 
 export default function AuthForm({ variant, action, token }: AuthFormProps) {
-  const [state, formAction, isPending] = useActionState<ActionState>(
-    action as (state: ActionState) => Promise<ActionState>,
+  const boundAction =
+    variant === "resetPassword"
+      ? (action as (...args: unknown[]) => Promise<ActionState>).bind(
+          null,
+          token ?? ""
+        )
+      : action
+  const [state, formAction, isPending] = useActionState<ActionState, FormData>(
+    boundAction as (
+      _prevState: ActionState,
+      payload: FormData
+    ) => ActionState | Promise<ActionState>,
     {} as ActionState
   )
 
   useEffect(() => {
     if (!state.message && !state.errors && !state.success) return
 
-    if (!state.success) {
+    if (!state.success && state.errors?.resetToken) {
+      toast.error(state.errors?.resetToken)
+    } else if (!state.success) {
       toast.error(state.message ?? "Failed")
     }
 
@@ -37,10 +49,7 @@ export default function AuthForm({ variant, action, token }: AuthFormProps) {
           <h2 className="text-[23px] font-bold">{config.header}</h2>
           <p className="mb-5 text-sm">{config.description}</p>
         </div>
-        {/*token value*/}
-        {variant === "resetPassword" && token && (
-          <input type="hidden" name="token" value={token} />
-        )}
+        {/* form fields */}
         <FormFields
           fields={config.fields}
           errors={state?.errors}
