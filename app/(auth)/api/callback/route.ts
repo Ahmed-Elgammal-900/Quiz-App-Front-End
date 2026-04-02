@@ -3,11 +3,10 @@ import { NextResponse } from "next/server"
 export async function GET(request: Request) {
   const url = new URL(request.url)
   const code = url.searchParams.get("code")
-  const userId = url.searchParams.get("userId")
 
-  if (code && userId) {
+  if (code) {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/auth/exchange?code=${code}&userId=${userId}`
+      `${process.env.NEXT_PUBLIC_API}/auth/exchange?code=${code}`
     )
 
     if (!res.ok) {
