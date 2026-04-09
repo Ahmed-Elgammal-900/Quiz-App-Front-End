@@ -8,30 +8,15 @@ export default function BadgesSkeleton() {
         <Skeleton className="h-5 w-15" />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-5 md:gap-x-7 lg:px-3">
-        <div className="flex w-fit flex-col items-center justify-center">
-          <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
-          <Skeleton className="h-5 w-13" />
-        </div>
-        <div className="flex w-fit flex-col items-center justify-center">
-          <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
-          <Skeleton className="h-5 w-13" />
-        </div>
-        <div className="flex w-fit flex-col items-center justify-center">
-          <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
-          <Skeleton className="h-5 w-13" />
-        </div>
-        <div className="flex w-fit flex-col items-center justify-center">
-          <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
-          <Skeleton className="h-5 w-13" />
-        </div>
-        <div className="flex w-fit flex-col items-center justify-center">
-          <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
-          <Skeleton className="h-5 w-13" />
-        </div>
-        <div className="flex w-fit flex-col items-center justify-center">
-          <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
-          <Skeleton className="h-5 w-13" />
-        </div>
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
+            key={i}
+            className="flex w-fit flex-col items-center justify-center"
+          >
+            <Skeleton className="mb-2 h-14 w-14 rounded-full md:h-16 md:w-16" />
+            <Skeleton className="h-5 w-13" />
+          </div>
+        ))}
       </div>
     </div>
   )

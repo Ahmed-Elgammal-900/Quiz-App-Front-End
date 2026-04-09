@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react"
+
 export interface AuthVariantConfig {
   header: string
   description: string
@@ -22,4 +24,19 @@ export type QuizConfig = {
   iconColor: string
   bgColor: string
   shadow: string
+}
+
+export interface NavItem {
+  label: string
+  href: string
+  icon: LucideIcon
+}
+
+export type StatConfig = {
+  property: string
+  label: string
+  icon: LucideIcon
+  color: string
+  variant: "full" | "default"
+  group: string | null
 }

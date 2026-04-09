@@ -17,7 +17,15 @@ export function UserMenu() {
       <div className="hidden p-3 lg:block">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors outline-none hover:cursor-pointer hover:bg-accent focus-visible:ring-0 focus-visible:ring-offset-0">
+            <button
+              type="button"
+              aria-label={
+                user?.name
+                  ? `Open user menu for ${user.name}`
+                  : "Open user menu"
+              }
+              className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors outline-none hover:cursor-pointer hover:bg-accent focus-visible:ring-0 focus-visible:ring-offset-0"
+            >
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-muted">
                 <User className="h-4 w-4" />
               </div>
@@ -43,7 +51,10 @@ export function UserMenu() {
       {/* Mobile — inside header */}
       <div className="lg:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center justify-center outline-none">
+          <DropdownMenuTrigger
+            aria-label="Open user menu"
+            className="flex items-center justify-center outline-none"
+          >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
               <User className="h-4 w-4 text-muted-foreground" />
             </div>

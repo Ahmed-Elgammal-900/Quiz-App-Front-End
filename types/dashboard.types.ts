@@ -3,22 +3,12 @@ import { QuizStatus } from "@/constants/quiz-status.constant"
 import { VariantProps } from "class-variance-authority"
 import { LucideIcon } from "lucide-react"
 
-export interface ActivityCardProps {
-  title: string
-  attemptAt: Date | string
-  score: number
-  status: QuizStatus
-  passed: boolean
-}
-
 export interface BadgeProps {
   badgeTitle: string
   earned?: boolean
 }
 
-export interface ActivityCardData {
-  id: string
-  quiz: { title: string }
+export interface ActivityCardProps {
   title: string
   attemptAt: Date | string
   score: number
@@ -26,12 +16,9 @@ export interface ActivityCardData {
   passed: boolean
 }
 
-export interface ActivityCardProps {
-  title: string
-  attemptAt: Date | string
-  score: number
-  status: QuizStatus
-  passed: boolean
+export interface ActivityCardData extends ActivityCardProps {
+  id: string
+  quiz: { title: string }
 }
 
 export interface StatCardProps extends VariantProps<typeof statCard> {

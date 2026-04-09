@@ -4,8 +4,6 @@ import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/system/sonner"
-import { UserProvider } from "@/context/UserContext"
-import { getUser } from "@/services/user.service"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -19,7 +17,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const user = await getUser()
   return (
     <html
       lang="en"
@@ -33,7 +30,7 @@ export default async function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <UserProvider user={user}>{children}</UserProvider>
+          {children}
           <Toaster />
         </ThemeProvider>
       </body>

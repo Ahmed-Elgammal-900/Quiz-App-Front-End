@@ -6,6 +6,8 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { QuizStatusBadge } from "../atom/QuizStatusBadge"
 import { ActivityCardProps } from "@/types/dashboard.types"
 
+dayjs.extend(relativeTime)
+
 export default function ActivityCard({
   title,
   attemptAt,
@@ -16,7 +18,6 @@ export default function ActivityCard({
   const config = quizzesConfig[title]
 
   if (!config) return null
-  dayjs.extend(relativeTime)
 
   const { icon: Icon, iconColor, bgColor } = config
   return (
@@ -33,7 +34,7 @@ export default function ActivityCard({
         <div>
           <h4 className="text-sm">{title}</h4>
           <div className="flex items-center">
-            <p className="text-xs text-muted-foreground">scrore: {score}</p>
+            <p className="text-xs text-muted-foreground">score: {score}</p>
             <span className="mx-1 size-1 rounded-full bg-muted-foreground" />
             <p className="text-xs text-muted-foreground">
               {dayjs(attemptAt).fromNow()}

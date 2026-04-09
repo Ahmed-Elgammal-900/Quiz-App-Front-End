@@ -1,5 +1,5 @@
 import WelcomeHeader from "@/components/ui/dashboard/molecule/WelcomeHeader"
-import StatsCardSkeleton from "@/components/ui/dashboard/organism/StatCardSkeleton"
+import StatsCardSkeleton from "@/components/ui/dashboard/organism/StatCardsSkeleton"
 import StatsCards from "@/components/ui/dashboard/organism/statCards"
 import { Suspense } from "react"
 import Badges from "@/components/ui/dashboard/organism/Badges"

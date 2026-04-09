@@ -11,7 +11,7 @@ import {
 } from "lucide-react"
 import { BadgeConfig } from "../types/config.types"
 
-export const badgesConfig: Record<string, BadgeConfig> = {
+export const badgesConfig = {
   "React Developer": {
     icon: Layout,
     gradient: "from-cyan-400 to-blue-500",
@@ -72,4 +72,6 @@ export const badgesConfig: Record<string, BadgeConfig> = {
     iconColor: "text-white",
     shadow: "shadow-green-500/30",
   },
-}
+} satisfies Record<string, BadgeConfig>
+
+export type BadgeTitle = keyof typeof badgesConfig

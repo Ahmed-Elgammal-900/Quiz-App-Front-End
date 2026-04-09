@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   if (!code) {
     return NextResponse.redirect(
       new URL(
-        "/oauth-error?message=Authentication service unavailable",
+        "/oauth-error?message=OAuth authorization code missing",
         request.url
       )
     )

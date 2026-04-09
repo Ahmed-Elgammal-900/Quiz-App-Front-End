@@ -41,10 +41,11 @@ export const otpSchema = z.object({
 
 export const changePasswordSchema = z
   .object({
-    oldPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .optional(),
+    oldPassword: z.preprocess(
+      (value) =>
+        typeof value === "string" && value.trim() === "" ? undefined : value,
+      z.string().min(8, "Password must be at least 8 characters").optional()
+    ),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })

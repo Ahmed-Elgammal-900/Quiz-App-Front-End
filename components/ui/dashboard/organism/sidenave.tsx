@@ -25,15 +25,17 @@ export default function SideNav() {
         <ScrollArea className="flex-1 px-3 py-4">
           <nav className="space-y-1">
             {navItems.map(({ label, href, icon: Icon }) => (
-              <Link key={href} href={href}>
-                <Button
-                  variant={pathname === href ? "default" : "ghost"}
-                  className="w-full justify-start gap-3 hover:cursor-pointer"
-                >
+              <Button
+                key={href}
+                asChild
+                variant={pathname === href ? "default" : "ghost"}
+                className="w-full justify-start gap-3"
+              >
+                <Link href={href}>
                   <Icon className="h-4 w-4" />
                   {label}
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             ))}
           </nav>
         </ScrollArea>
