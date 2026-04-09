@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react"
-import { Input } from "../../input"
-import { Field, FieldError, FieldLabel } from "../../field"
+import { Input } from "../../system/input"
+import { Field, FieldError, FieldLabel } from "../../system/field"
 
 export default function EmailField({
   emailError,

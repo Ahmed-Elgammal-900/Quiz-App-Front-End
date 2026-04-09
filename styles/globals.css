@@ -11,13 +11,13 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.488 0.243 264.376);
+  --primary: oklch(48.78% 0.24331 264.421);
   --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: oklch(39.584% 0.00525 236.91);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --accent: oklch(49.107% 0.24121 264.248 / 0.386);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -37,6 +37,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --scrollbar-thumb: oklch(39.584% 0.00525 236.91 / 0.248);
+  --scrollbar-thumb-hover: oklch(39.584% 0.00525 236.91 / 0.295);
 }
 
 .dark {
@@ -50,9 +52,9 @@
   --primary-foreground: oklch(31.164% 0.10501 255.651);
   --secondary: oklch(57.487% 0.15785 267.551);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --muted: oklch(25.047% 0.08088 254.435);
+  --muted-foreground: oklch(65.136% 0.03884 269.69);
+  --accent: oklch(65.711% 0.18239 257.623 / 0.429);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -71,6 +73,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --scrollbar-thumb: oklch(82.861% 0.03756 272.002 / 0.17);
+  --scrollbar-thumb-hover: oklch(82.861% 0.03756 272.002 / 0.174);
 }
 
 @theme inline {
@@ -124,5 +128,29 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 100vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    cursor: grab;
+    background: var(--scrollbar-thumb-hover);
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
   }
 }

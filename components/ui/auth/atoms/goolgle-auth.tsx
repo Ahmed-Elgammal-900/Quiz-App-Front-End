@@ -1,4 +1,4 @@
-import { Button } from "../../button"
+import { Button } from "../../system/button"
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
@@ -13,9 +13,7 @@ export default function GoogleAuth() {
         href={`${process.env.NEXT_PUBLIC_API}/auth/google`}
         className="w-full"
       >
-        <FontAwesomeIcon icon={faGoogle} size="lg" />
-        {" "}
-        Google
+        <FontAwesomeIcon icon={faGoogle} size="lg" /> Google
       </Link>
     </Button>
   )

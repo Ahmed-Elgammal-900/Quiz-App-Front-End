@@ -41,7 +41,10 @@ export const otpSchema = z.object({
 
 export const changePasswordSchema = z
   .object({
-    oldPassword: z.string().min(8, "Password must be at least 8 characters"),
+    oldPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .optional(),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
@@ -49,7 +52,7 @@ export const changePasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   })
-  .refine((data) => data.password !== data.oldPassword, {
+  .refine((data) => !data.oldPassword || data.password !== data.oldPassword, {
     message: "New password must be different from old password",
     path: ["password"],
   })

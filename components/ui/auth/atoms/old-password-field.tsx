@@ -1,7 +1,7 @@
 import { Eye, EyeOff, Lock } from "lucide-react"
-import { Field, FieldError, FieldLabel } from "../../field"
-import { Input } from "../../input"
-import { Button } from "../../button"
+import { Field, FieldError, FieldLabel } from "../../system/field"
+import { Input } from "../../system/input"
+import { Button } from "../../system/button"
 import { useState } from "react"
 
 export default function OldPasswordField({

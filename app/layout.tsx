@@ -3,7 +3,9 @@ import { Geist_Mono, Inter } from "next/font/google"
 import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/system/sonner"
+import { UserProvider } from "@/context/UserContext"
+import { getUser } from "@/services/user.service"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -12,11 +14,12 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const user = await getUser()
   return (
     <html
       lang="en"
@@ -30,7 +33,7 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          {children}
+          <UserProvider user={user}>{children}</UserProvider>
           <Toaster />
         </ThemeProvider>
       </body>

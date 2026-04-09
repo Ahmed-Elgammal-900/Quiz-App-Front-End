@@ -1,6 +1,7 @@
 import { resetPasswordAction } from "@/actions/auth.action"
 import AuthForm from "@/components/ui/auth/auth-form"
 import AuthHeader from "@/components/ui/auth/shared/auth-header"
+import { ActionState } from "@/types/auth.types"
 
 export default async function ResetPassword({
   searchParams,
@@ -17,7 +18,7 @@ export default async function ResetPassword({
       <AuthForm
         variant="resetPassword"
         token={params?.token}
-        action={resetPasswordAction}
+        action={resetPasswordAction as () => ActionState | Promise<ActionState>}
       />
     </>
   )

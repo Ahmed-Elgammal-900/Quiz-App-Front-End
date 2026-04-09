@@ -1,17 +1,7 @@
 import { AuthVariant } from "@/types/auth.types"
+import { AuthVariantConfig } from "../types/config.types"
 
-export interface VariantConfig {
-  header: string
-  description: string
-  buttonLabel: string
-  buttonPending: string
-  fields: Array<"name" | "email" | "password" | "confirmPassword" | "otp">
-  showSocialAuth: boolean
-  footer?: { text: string; linkLabel: string; href: string }
-  backLink?: { label: string; href: string }
-}
-
-export const VARIANT_CONFIG: Record<AuthVariant, VariantConfig> = {
+export const VARIANT_CONFIG: Record<AuthVariant, AuthVariantConfig> = {
   login: {
     header: "Welcome Back",
     description: "Sign in to your account to continue.",

@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { FieldSeparator } from "../field"
+import { FieldSeparator } from "../system/field"
 import AuthButton from "./atoms/auth-button"
 import GoogleAuth from "./atoms/goolgle-auth"
 import { useActionState, useEffect } from "react"
@@ -45,7 +45,6 @@ export default function AuthForm({ variant, action, token }: AuthFormProps) {
     <form action={formAction} noValidate suppressHydrationWarning>
       <div className="mx-auto mt-4 mb-10 w-full max-w-107 rounded-3xl bg-card px-7 py-10 shadow-xl sm:px-9">
         <div className="text-center">
-          {" "}
           <h2 className="text-[23px] font-bold">{config.header}</h2>
           <p className="mb-5 text-sm">{config.description}</p>
         </div>

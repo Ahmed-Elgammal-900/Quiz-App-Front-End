@@ -1,6 +1,6 @@
 import { User } from "lucide-react"
-import { Field, FieldError, FieldLabel } from "../../field"
-import { Input } from "../../input"
+import { Field, FieldError, FieldLabel } from "../../system/field"
+import { Input } from "../../system/input"
 
 export default function NameField({
   nameError,
