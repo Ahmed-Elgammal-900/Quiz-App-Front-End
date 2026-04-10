@@ -35,6 +35,8 @@ export default function PasswordField({
           placeholder="••••••••"
           type={passwordVisible ? "text" : "password"}
           name="password"
+          aria-invalid={Boolean(passwordError)}
+          aria-describedby={passwordError ? "password-error" : undefined}
         />
         <Button
           onClick={() => setPasswordVisible((prev) => !prev)}
@@ -46,7 +48,9 @@ export default function PasswordField({
           {passwordVisible ? <EyeOff></EyeOff> : <Eye></Eye>}
         </Button>
       </div>
-      {passwordError && <FieldError>{passwordError}</FieldError>}
+      {passwordError && (
+        <FieldError id="password-error">{passwordError}</FieldError>
+      )}
     </Field>
   )
 }
