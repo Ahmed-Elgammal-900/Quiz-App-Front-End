@@ -3,7 +3,6 @@ import {
   changePassword,
   forgetPassword,
   login,
-  logout,
   register,
   resendOtp,
   resetPassword,
@@ -23,7 +22,6 @@ import { ActionState } from "@/types/auth.types"
 import { parseSetCookieHeader } from "@/utils/cookie"
 
 export async function registerAction(
-  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -70,7 +68,6 @@ export async function registerAction(
 }
 
 export async function loginAction(
-  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -134,7 +131,6 @@ export async function loginAction(
 }
 
 export async function forgetPasswordAction(
-  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -244,7 +240,6 @@ export async function resetPasswordAction(
 }
 
 export async function verifyOtpAction(
-  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -334,7 +329,6 @@ export async function resendOtpAction(): Promise<ActionState> {
 }
 
 export async function changePasswordAction(
-  _token: string | undefined,
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
@@ -385,24 +379,8 @@ export async function changePasswordAction(
 }
 
 export async function logoutAction() {
-  try {
-    const cookie = await cookies()
-    const accessToken = cookie.get("access_token")?.value
-    const res = await logout(accessToken ?? "")
-
-    const setCookieHeader = res.headers.get("set-cookie")
-
-    if (setCookieHeader) {
-      const parsed = parseSetCookieHeader(setCookieHeader)
-      parsed.forEach(({ name, value, options }) => {
-        cookie.set(name, value, options)
-      })
-    }
-  } catch {
-    return {
-      success: false,
-      message: "Something went wrong, please try again",
-    }
-  }
+  const cookieStore = await cookies()
+  cookieStore.delete("access_token")
+  cookieStore.delete("refresh_token")
   redirect("/login")
 }

@@ -3,7 +3,7 @@ import ConfirmPassword from "@/components/ui/auth/atoms/confirm-password"
 import EmailField from "@/components/ui/auth/atoms/email-field"
 import NameField from "@/components/ui/auth/atoms/name-field"
 import PasswordField from "@/components/ui/auth/atoms/password-field"
-import { VariantConfig } from "@/config/auth.config"
+import { AuthVariantConfig } from "@/types/config.types"
 import { FieldErrors } from "@/types/auth.types"
 
 export function FormFields({
@@ -11,7 +11,7 @@ export function FormFields({
   errors,
   isLogin,
 }: {
-  fields: VariantConfig["fields"]
+  fields: AuthVariantConfig["fields"]
   errors: FieldErrors | null | undefined
   isLogin: boolean
 }) {

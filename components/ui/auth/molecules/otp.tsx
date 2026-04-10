@@ -1,6 +1,6 @@
 import { REGEXP_ONLY_DIGITS } from "input-otp"
-import { Field, FieldError } from "../../field"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../../input-otp"
+import { Field, FieldError } from "../../system/field"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../../system/input-otp"
 import { useEffect, useState } from "react"
 import { resendOtpAction } from "@/actions/auth.action"
 import { cn } from "@/lib/utils"

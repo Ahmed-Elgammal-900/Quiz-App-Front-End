@@ -1,16 +1,4 @@
-interface CookieOptions {
-  httpOnly?: boolean
-  path?: string
-  maxAge?: number
-  sameSite?: "strict" | "lax" | "none"
-  secure?: boolean
-}
-
-interface ParsedCookie {
-  name: string
-  value: string
-  options: CookieOptions
-}
+import { ParsedCookie } from "@/types/system.types"
 
 export function parseSetCookieHeader(setCookieHeader: string): ParsedCookie[] {
   const cookieStrings = setCookieHeader.split(/, (?=[a-zA-Z])/)

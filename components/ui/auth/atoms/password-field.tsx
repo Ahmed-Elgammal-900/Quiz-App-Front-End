@@ -1,8 +1,8 @@
 import { Eye, EyeOff, Lock } from "lucide-react"
-import { Field, FieldError, FieldLabel } from "../../field"
-import { Input } from "../../input"
+import { Field, FieldError, FieldLabel } from "../../system/field"
+import { Input } from "../../system/input"
 import Link from "next/link"
-import { Button } from "../../button"
+import { Button } from "../../system/button"
 import { useState } from "react"
 
 export default function PasswordField({
@@ -12,7 +12,7 @@ export default function PasswordField({
   passwordError: string | undefined
   isLogin: boolean
 }) {
-  const [passwordVisiple, setPasswordVisiple] = useState<boolean>(false)
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
 
   return (
     <Field className="mb-7">
@@ -33,18 +33,24 @@ export default function PasswordField({
           id="password"
           className={`ps-10 focus:border-primary ${passwordError && "border-destructive"}`}
           placeholder="••••••••"
-          type={passwordVisiple ? "text" : "password"}
+          type={passwordVisible ? "text" : "password"}
           name="password"
+          aria-invalid={Boolean(passwordError)}
+          aria-describedby={passwordError ? "password-error" : undefined}
         />
         <Button
-          onClick={() => setPasswordVisiple((prev) => !prev)}
+          onClick={() => setPasswordVisible((prev) => !prev)}
           type="button"
+          aria-pressed={passwordVisible}
+          aria-label={passwordVisible ? "Hide password" : "Show password"}
           className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 bg-transparent text-muted-foreground hover:cursor-pointer"
         >
-          {passwordVisiple ? <EyeOff></EyeOff> : <Eye></Eye>}
+          {passwordVisible ? <EyeOff></EyeOff> : <Eye></Eye>}
         </Button>
       </div>
-      {passwordError && <FieldError>{passwordError}</FieldError>}
+      {passwordError && (
+        <FieldError id="password-error">{passwordError}</FieldError>
+      )}
     </Field>
   )
 }

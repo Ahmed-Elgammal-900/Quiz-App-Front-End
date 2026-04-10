@@ -1,4 +1,4 @@
-import { Button } from "../../button"
+import { Button } from "../../system/button"
 
 export default function AuthButton({
   isPending,
