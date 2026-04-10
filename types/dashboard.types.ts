@@ -1,7 +1,7 @@
-import { statCard } from "@/components/ui/dashboard/molecule/StatCard"
 import { QuizStatus } from "@/constants/quiz-status.constant"
-import { VariantProps } from "class-variance-authority"
 import { LucideIcon } from "lucide-react"
+
+type StatCardVariant = "default" | "full"
 
 export interface BadgeProps {
   badgeTitle: string
@@ -16,12 +16,13 @@ export interface ActivityCardProps {
   passed: boolean
 }
 
-export interface ActivityCardData extends ActivityCardProps {
+export interface ActivityCardData extends Omit<ActivityCardProps, "title"> {
   id: string
   quiz: { title: string }
 }
 
-export interface StatCardProps extends VariantProps<typeof statCard> {
+export interface StatCardProps {
+  variant?: StatCardVariant
   label: string
   value: number
   icon: LucideIcon
