@@ -91,10 +91,3 @@ export async function refreshTokens(refreshToken: string) {
     headers: { Cookie: `refresh_token=${refreshToken}` },
   })
 }
-
-export async function logout(accessToken: string) {
-  return fetch(`${process.env.NEXT_PUBLIC_API}/auth/logout`, {
-    method: "POST",
-    headers: { Cookie: `access_token=${accessToken}` },
-  })
-}
