@@ -24,7 +24,7 @@ export async function getStats(): Promise<Stats> {
     return parsed.data
   } catch (error) {
     console.error("Failed to fetch stats", error)
-    throw new Error("Failed to fetch stats")
+    throw error instanceof Error ? error : new Error("Failed to fetch stats")
   }
 }
 
@@ -46,7 +46,7 @@ export async function getBadges(): Promise<Badge[]> {
     return parsed.data
   } catch (error) {
     console.error("Failed to fetch badges", error)
-    throw new Error("Failed to fetch badges")
+    throw error instanceof Error ? error : new Error("Failed to fetch badges")
   }
 }
 
@@ -68,6 +68,8 @@ export async function getActivities(): Promise<Activity[]> {
     return parsed.data
   } catch (error) {
     console.error("Failed to fetch activities", error)
-    throw new Error("Failed to fetch activities")
+    throw error instanceof Error
+      ? error
+      : new Error("Failed to fetch activities")
   }
 }

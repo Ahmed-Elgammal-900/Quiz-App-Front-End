@@ -21,7 +21,7 @@ export async function getUser() {
     return parsed.data
   } catch (error) {
     console.error("Failed to fetch user", error)
-    throw new Error("Failed to fetch user")
+    throw error instanceof Error ? error : new Error("Failed to fetch user")
   }
 }
 
@@ -42,6 +42,6 @@ export async function deleteUser() {
     return res
   } catch (error) {
     console.error("Failed to delete user:", error)
-    throw new Error("Failed to delete user")
+    throw error instanceof Error ? error : new Error("Failed to delete user")
   }
 }
