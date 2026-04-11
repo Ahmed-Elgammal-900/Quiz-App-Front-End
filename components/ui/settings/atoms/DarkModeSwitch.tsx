@@ -7,13 +7,11 @@ import {
   FieldLabel,
 } from "../../system/field"
 import { Switch } from "../../system/switch"
-import { useEffect, useState } from "react"
 
 export default function DarkModeSwitch() {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
-  useEffect(() => setMounted(true), [])
+  if (!resolvedTheme) return null
   return (
     <Field orientation="horizontal">
       <FieldContent>
@@ -28,7 +26,7 @@ export default function DarkModeSwitch() {
       </FieldContent>
       <Switch
         id="switch-focus-mode"
-        checked={mounted ? theme === "dark" : false}
+        checked={resolvedTheme === "dark"}
         onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
       />
     </Field>
