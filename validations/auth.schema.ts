@@ -41,22 +41,25 @@ export const otpSchema = z.object({
 
 export const changePasswordSchema = z
   .object({
-    oldPassword: z.preprocess(
-      (value) =>
-        typeof value === "string" && value.trim() === "" ? undefined : value,
-      z.string().min(8, "Password must be at least 8 characters").optional()
-    ),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
+    currentPassword: z.union([
+      z.string().min(8, "Password must be at least 8 characters"),
+      z.undefined(),
+    ]),
+    newPassword: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z.string().min(1, "Confirm password is required"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   })
-  .refine((data) => !data.oldPassword || data.password !== data.oldPassword, {
-    message: "New password must be different from old password",
-    path: ["password"],
-  })
+  .refine(
+    (data) =>
+      !data.currentPassword || data.newPassword !== data.currentPassword,
+    {
+      message: "New password must be different from current password",
+      path: ["newPassword"],
+    }
+  )
 
 export type RegisterInput = z.infer<typeof registerSchema>
 export type LoginInput = z.infer<typeof loginSchema>

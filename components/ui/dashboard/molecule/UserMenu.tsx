@@ -11,9 +11,10 @@ import { logoutAction } from "@/actions/auth.action"
 
 export function UserMenu() {
   const user = useUser()
+
   return (
     <>
-      {/* Desktop — inside sidenav */}
+      {/* Desktop */}
       <div className="hidden p-3 lg:block">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -48,7 +49,7 @@ export function UserMenu() {
         </DropdownMenu>
       </div>
 
-      {/* Mobile — inside header */}
+      {/* Mobile */}
       <div className="lg:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger

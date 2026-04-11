@@ -1,5 +1,5 @@
 "use client"
-import { User } from "@/types/user.types"
+import type { User } from "@/validations/user.schema"
 import { createContext } from "react"
 
 export const UserContext = createContext<User | null>(null)

@@ -16,11 +16,6 @@ export interface ActivityCardProps {
   passed: boolean
 }
 
-export interface ActivityCardData extends Omit<ActivityCardProps, "title"> {
-  id: string
-  quiz: { title: string }
-}
-
 export interface StatCardProps {
   variant?: StatCardVariant
   label: string

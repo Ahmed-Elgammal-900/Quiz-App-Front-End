@@ -1,3 +1,4 @@
+"use client"
 import { Eye, EyeOff, Lock } from "lucide-react"
 import { Field, FieldError, FieldLabel } from "../../system/field"
 import { Input } from "../../system/input"

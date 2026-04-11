@@ -30,15 +30,9 @@ export default async function Badges() {
         ) : (
           badges
             .slice(0, 7)
-            .map(
-              ({
-                quizId,
-                badgeTitle,
-              }: {
-                quizId: string
-                badgeTitle: string
-              }) => <Badge key={quizId} badgeTitle={badgeTitle} earned={true} />
-            )
+            .map(({ quizId, badgeTitle }) => (
+              <Badge key={quizId} badgeTitle={badgeTitle} earned={true} />
+            ))
         )}
       </div>
     </section>

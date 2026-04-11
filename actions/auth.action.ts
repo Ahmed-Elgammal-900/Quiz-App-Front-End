@@ -3,6 +3,7 @@ import {
   changePassword,
   forgetPassword,
   login,
+  logout,
   register,
   resendOtp,
   resetPassword,
@@ -333,9 +334,9 @@ export async function changePasswordAction(
   formData: FormData
 ): Promise<ActionState> {
   const raw = {
-    oldPassword: formData.get("oldPassword") as string,
-    password: formData.get("password") as string,
-    confirmPassword: formData.get("confirmPassword") as string,
+    currentPassword: formData.get("current-password") ?? undefined,
+    newPassword: formData.get("password") as string,
+    confirmPassword: formData.get("confirm-password") as string,
   }
 
   const parsed = changePasswordSchema.safeParse(raw)
@@ -353,7 +354,10 @@ export async function changePasswordAction(
   }
 
   try {
-    const res = await changePassword(parsed.data)
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get("access_token")?.value
+    if (!accessToken) return { success: false, message: "Unauthorized" }
+    const res = await changePassword(parsed.data, accessToken)
     const { data } = await res.json()
 
     if (!res.ok) {
@@ -379,8 +383,25 @@ export async function changePasswordAction(
 }
 
 export async function logoutAction() {
-  const cookieStore = await cookies()
-  cookieStore.delete("access_token")
-  cookieStore.delete("refresh_token")
+  const cookie = await cookies()
+  try {
+    const accessToken = cookie.get("access_token")?.value
+    if (!accessToken) return { success: false, message: "Already logged out" }
+    const res = await logout(accessToken)
+    const setCookieHeader = res.headers.get("set-cookie")
+
+    if (setCookieHeader) {
+      const parsed = parseSetCookieHeader(setCookieHeader)
+      parsed.forEach(({ name, value, options }) => {
+        cookie.set(name, value, options)
+      })
+    } else {
+      cookie.delete("access_token")
+      cookie.delete("refresh_token")
+    }
+  } catch {
+    cookie.delete("access_token")
+    cookie.delete("refresh_token")
+  }
   redirect("/login")
 }
