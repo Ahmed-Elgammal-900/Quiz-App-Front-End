@@ -1,4 +1,4 @@
-import { User } from "@/types/user.types"
+import { UserSchema } from "@/validations/user.schema"
 import { cookies } from "next/headers"
 
 export async function getUser() {
@@ -15,7 +15,10 @@ export async function getUser() {
     }
 
     const { data } = await res.json()
-    return data as User
+
+    const parsed = UserSchema.safeParse(data)
+    if (!parsed.success) throw new Error(`Invalid user shape: ${parsed.error}`)
+    return parsed.data
   } catch (error) {
     console.error("Failed to fetch user", error)
     throw new Error("Failed to fetch user")
