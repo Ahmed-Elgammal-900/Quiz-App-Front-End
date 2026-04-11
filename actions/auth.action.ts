@@ -382,11 +382,10 @@ export async function changePasswordAction(
 }
 
 export async function logoutAction() {
+  const cookie = await cookies()
   try {
-    const cookie = await cookies()
     const accessToken = cookie.get("access_token")?.value
     const res = await logout(accessToken ?? "")
-
     const setCookieHeader = res.headers.get("set-cookie")
 
     if (setCookieHeader) {
@@ -394,12 +393,13 @@ export async function logoutAction() {
       parsed.forEach(({ name, value, options }) => {
         cookie.set(name, value, options)
       })
+    } else {
+      cookie.delete("access_token")
+      cookie.delete("refresh_token")
     }
   } catch {
-    return {
-      success: false,
-      message: "Something went wrong, please try again",
-    }
+    cookie.delete("access_token")
+    cookie.delete("refresh_token")
   }
   redirect("/login")
 }

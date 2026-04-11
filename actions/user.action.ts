@@ -4,7 +4,10 @@ import { parseSetCookieHeader } from "@/utils/cookie"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-export async function deleteUserAction() {
+export async function deleteUserAction(): Promise<{
+  success: false
+  message: string
+} | void> {
   const cookie = await cookies()
   try {
     const res = await deleteUser()

@@ -3,36 +3,44 @@ import { cookies } from "next/headers"
 
 export async function getUser() {
   const cookieStore = await cookies()
+  try {
+    const res = await fetch(`${process.env.API_URL}/user`, {
+      headers: { Cookie: cookieStore.toString() },
+      cache: "no-store",
+    })
 
-  const res = await fetch(`${process.env.API_URL}/user`, {
-    headers: { Cookie: cookieStore.toString() },
-    cache: "no-store",
-  })
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error("Failed to fetch user", errorText)
+      throw new Error("Failed to fetch user")
+    }
 
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error("Failed to fetch user", errorText)
-    return null
+    const { data } = await res.json()
+    return data as User
+  } catch (error) {
+    console.error("Failed to fetch user", error)
+    throw new Error("Failed to fetch user")
   }
-
-  const { data }: { data: User | null } = await res.json()
-  return data
 }
 
 export async function deleteUser() {
   const cookieStore = await cookies()
+  try {
+    const res = await fetch(`${process.env.API_URL}/user`, {
+      method: "DELETE",
+      headers: { Cookie: cookieStore.toString() },
+      cache: "no-store",
+    })
 
-  const res = await fetch(`${process.env.API_URL}/user`, {
-    method: "DELETE",
-    headers: { Cookie: cookieStore.toString() },
-    cache: "no-store",
-  })
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error("Failed to delete user:", errorText)
+      throw new Error("Failed to delete user")
+    }
 
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error("Failed to delete user:", errorText)
-    throw errorText
+    return res
+  } catch (error) {
+    console.error("Failed to delete user:", error)
+    throw new Error("Failed to delete user")
   }
-
-  return res
 }

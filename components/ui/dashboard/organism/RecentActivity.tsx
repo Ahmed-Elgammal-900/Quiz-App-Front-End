@@ -1,7 +1,6 @@
 import { getActivities } from "@/services/dashboard.service"
 import ActivityCard from "../molecule/ActivityCard"
 import { ScrollArea } from "../../system/scroll-area"
-import { ActivityCardData } from "@/types/dashboard.types"
 
 export default async function RecentActivity() {
   const activities = await getActivities()
@@ -21,14 +20,7 @@ export default async function RecentActivity() {
             </div>
           ) : (
             activities.map(
-              ({
-                id,
-                quiz: { title },
-                attemptAt,
-                score,
-                status,
-                passed,
-              }: ActivityCardData) => (
+              ({ id, quiz: { title }, attemptAt, score, status, passed }) => (
                 <ActivityCard
                   key={id}
                   title={title}

@@ -16,7 +16,7 @@ export interface ActivityCardProps {
   passed: boolean
 }
 
-export interface ActivityCardData extends Omit<ActivityCardProps, "title"> {
+export interface ActivityData extends Omit<ActivityCardProps, "title"> {
   id: string
   quiz: { title: string }
 }
@@ -32,4 +32,16 @@ export interface StatCardProps {
 export interface QuizStatusBadgeProps {
   status: QuizStatus
   className?: string
+}
+
+export interface Badge {
+  quizId: string
+  badgeTitle: string
+}
+
+export interface Stats {
+  totalQuizzes: number
+  passedQuizzes: number
+  averageScore: number
+  totalScore: number
 }

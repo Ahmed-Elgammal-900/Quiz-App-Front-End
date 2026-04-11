@@ -22,7 +22,7 @@ export default function EmailField({
           aria-describedby={emailError ? "email-error" : undefined}
         />
       </div>
-      {emailError && <FieldError>{emailError}</FieldError>}
+      {emailError && <FieldError id="email-error">{emailError}</FieldError>}
     </Field>
   )
 }

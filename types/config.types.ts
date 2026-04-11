@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react"
+import { Stats } from "./dashboard.types"
 
 export interface AuthVariantConfig {
   header: string
@@ -18,7 +19,7 @@ export interface BadgeConfig {
   shadow: string
 }
 
-export type QuizConfig = {
+export interface QuizConfig {
   icon: React.ElementType
   gradient: string
   iconColor: string
@@ -32,8 +33,8 @@ export interface NavItem {
   icon: LucideIcon
 }
 
-export type StatConfig = {
-  property: string
+export interface StatConfig {
+  property: keyof Stats
   label: string
   icon: LucideIcon
   color: string

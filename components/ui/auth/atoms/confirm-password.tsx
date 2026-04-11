@@ -24,7 +24,11 @@ export default function ConfirmPassword({
           }
         />
       </div>
-      {confirmPasswordError && <FieldError>{confirmPasswordError}</FieldError>}
+      {confirmPasswordError && (
+        <FieldError id="confirm-password-error">
+          {confirmPasswordError}
+        </FieldError>
+      )}
     </Field>
   )
 }

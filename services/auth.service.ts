@@ -81,21 +81,21 @@ export async function changePassword(
   })
 }
 
-export async function verifyAccessToken(accessToken: string) {
+export async function verifyAccessToken(accessToken: NonNullable<string>) {
   return fetch(`${process.env.API_URL}/auth/verify-access-token`, {
     method: "POST",
     headers: { Cookie: `access_token=${accessToken}` },
   })
 }
 
-export async function refreshTokens(refreshToken: string) {
+export async function refreshTokens(refreshToken: NonNullable<string>) {
   return fetch(`${process.env.API_URL}/auth/refresh-token`, {
     method: "POST",
     headers: { Cookie: `refresh_token=${refreshToken}` },
   })
 }
 
-export async function logout(accessToken: string) {
+export async function logout(accessToken: NonNullable<string>) {
   return fetch(`${process.env.API_URL}/auth/logout`, {
     method: "POST",
     headers: { Cookie: `access_token=${accessToken}` },

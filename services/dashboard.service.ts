@@ -1,49 +1,63 @@
+import { ActivityData, Badge, Stats } from "@/types/dashboard.types"
 import { cookies } from "next/headers"
 
 export async function getStats() {
   const cookieStore = await cookies()
-
-  const res = await fetch(`${process.env.API_URL}/quizzes/stats`, {
-    headers: { Cookie: cookieStore.toString() },
-    cache: "no-store",
-  })
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error("Failed to fetch stats", errorText)
-    return null
+  try {
+    const res = await fetch(`${process.env.API_URL}/quizzes/stats`, {
+      headers: { Cookie: cookieStore.toString() },
+      cache: "no-store",
+    })
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error("Failed to fetch stats", errorText)
+      throw new Error("Failed to fetch stats")
+    }
+    const { data } = await res.json()
+    return data as Stats
+  } catch (error) {
+    console.error("Failed to fetch stats", error)
+    throw new Error("Failed to fetch stats")
   }
-  const { data } = await res.json()
-  return data
 }
 
 export async function getBadges() {
   const cookieStore = await cookies()
+  try {
+    const res = await fetch(`${process.env.API_URL}/quizzes/badges`, {
+      headers: { Cookie: cookieStore.toString() },
+      cache: "no-store",
+    })
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error("Failed to fetch badges", errorText)
+      throw new Error("Failed to fetch badges")
+    }
+    const { data } = await res.json()
 
-  const res = await fetch(`${process.env.API_URL}/quizzes/badges`, {
-    headers: { Cookie: cookieStore.toString() },
-    cache: "no-store",
-  })
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error("Failed to fetch badges", errorText)
-    return null
+    return data as Badge[]
+  } catch (error) {
+    console.error("Failed to fetch badges", error)
+    throw new Error("Failed to fetch badges")
   }
-  const { data } = await res.json()
-  return data
 }
 
 export async function getActivities() {
   const cookieStore = await cookies()
-
-  const res = await fetch(`${process.env.API_URL}/quizzes/activities`, {
-    headers: { Cookie: cookieStore.toString() },
-    cache: "no-store",
-  })
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error("Failed to fetch activities", errorText)
-    return null
+  try {
+    const res = await fetch(`${process.env.API_URL}/quizzes/activities`, {
+      headers: { Cookie: cookieStore.toString() },
+      cache: "no-store",
+    })
+    if (!res.ok) {
+      const errorText = await res.text()
+      console.error("Failed to fetch activities", errorText)
+      throw new Error("Failed to fetch activities")
+    }
+    const { data } = await res.json()
+    return data as ActivityData[]
+  } catch (error) {
+    console.error("Failed to fetch activities", error)
+    throw new Error("Failed to fetch activities")
   }
-  const { data } = await res.json()
-  return data
 }
