@@ -11,8 +11,7 @@ export async function getUser() {
 
     if (!res.ok) {
       const errorText = await res.text()
-      console.error("Failed to fetch user", errorText)
-      throw new Error("Failed to fetch user")
+      throw new Error(errorText)
     }
 
     const { data } = await res.json()
@@ -34,8 +33,7 @@ export async function deleteUser() {
 
     if (!res.ok) {
       const errorText = await res.text()
-      console.error("Failed to delete user:", errorText)
-      throw new Error("Failed to delete user")
+      throw new Error(errorText)
     }
 
     return res

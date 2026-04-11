@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react"
-import { Stats } from "./dashboard.types"
+import type { Stats } from "./dashboard.types"
 
 export interface AuthVariantConfig {
   header: string

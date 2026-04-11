@@ -10,8 +10,7 @@ export async function getStats() {
     })
     if (!res.ok) {
       const errorText = await res.text()
-      console.error("Failed to fetch stats", errorText)
-      throw new Error("Failed to fetch stats")
+      throw new Error(errorText)
     }
     const { data } = await res.json()
     return data as Stats
@@ -30,8 +29,7 @@ export async function getBadges() {
     })
     if (!res.ok) {
       const errorText = await res.text()
-      console.error("Failed to fetch badges", errorText)
-      throw new Error("Failed to fetch badges")
+      throw new Error(errorText)
     }
     const { data } = await res.json()
 
@@ -51,8 +49,7 @@ export async function getActivities() {
     })
     if (!res.ok) {
       const errorText = await res.text()
-      console.error("Failed to fetch activities", errorText)
-      throw new Error("Failed to fetch activities")
+      throw new Error(errorText)
     }
     const { data } = await res.json()
     return data as ActivityData[]

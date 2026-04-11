@@ -356,7 +356,8 @@ export async function changePasswordAction(
   try {
     const cookieStore = await cookies()
     const accessToken = cookieStore.get("access_token")?.value
-    const res = await changePassword(parsed.data, accessToken ?? "")
+    if (!accessToken) return { success: false, message: "Unauthorized" }
+    const res = await changePassword(parsed.data, accessToken)
     const { data } = await res.json()
 
     if (!res.ok) {
@@ -385,7 +386,8 @@ export async function logoutAction() {
   const cookie = await cookies()
   try {
     const accessToken = cookie.get("access_token")?.value
-    const res = await logout(accessToken ?? "")
+    if (!accessToken) return { success: false, message: "Already logged out" }
+    const res = await logout(accessToken)
     const setCookieHeader = res.headers.get("set-cookie")
 
     if (setCookieHeader) {
