@@ -1,7 +1,7 @@
 import ChangePasswordForm from "@/components/ui/settings/molecules/ChangePasswordForm"
 import DeleteAccount from "@/components/ui/settings/molecules/DeleteAccount"
 import Preference from "@/components/ui/settings/molecules/Preferences"
-import SettingsHeader from "@/components/ui/settings/molecules/SettingsHeader"
+import SettingsHeader from "@/components/ui/settings/atoms/SettingsHeader"
 import UserInfo from "@/components/ui/settings/molecules/UserInfo"
 
 export default function Settings() {
