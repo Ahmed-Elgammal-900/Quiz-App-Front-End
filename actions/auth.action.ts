@@ -3,6 +3,7 @@ import {
   changePassword,
   forgetPassword,
   login,
+  logout,
   register,
   resendOtp,
   resetPassword,
@@ -333,9 +334,9 @@ export async function changePasswordAction(
   formData: FormData
 ): Promise<ActionState> {
   const raw = {
-    oldPassword: formData.get("oldPassword") as string,
-    password: formData.get("password") as string,
-    confirmPassword: formData.get("confirmPassword") as string,
+    currentPassword: formData.get("current-password") ?? undefined,
+    newPassword: formData.get("password") as string,
+    confirmPassword: formData.get("confirm-password") as string,
   }
 
   const parsed = changePasswordSchema.safeParse(raw)
@@ -353,7 +354,8 @@ export async function changePasswordAction(
   }
 
   try {
-    const res = await changePassword(parsed.data)
+    const cookieStore = await cookies()
+    const res = await changePassword(parsed.data, cookieStore)
     const { data } = await res.json()
 
     if (!res.ok) {
@@ -379,8 +381,24 @@ export async function changePasswordAction(
 }
 
 export async function logoutAction() {
-  const cookieStore = await cookies()
-  cookieStore.delete("access_token")
-  cookieStore.delete("refresh_token")
+  try {
+    const cookie = await cookies()
+    const accessToken = cookie.get("access_token")?.value
+    const res = await logout(accessToken ?? "")
+
+    const setCookieHeader = res.headers.get("set-cookie")
+
+    if (setCookieHeader) {
+      const parsed = parseSetCookieHeader(setCookieHeader)
+      parsed.forEach(({ name, value, options }) => {
+        cookie.set(name, value, options)
+      })
+    }
+  } catch {
+    return {
+      success: false,
+      message: "Something went wrong, please try again",
+    }
+  }
   redirect("/login")
 }

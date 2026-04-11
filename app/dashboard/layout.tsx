@@ -11,6 +11,11 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   const user = await getUser()
+  // const user = {
+  //   name: "Ahmed Elgammal",
+  //   email: "elgmmal228@gmail.com",
+  //   providers: ["google"],
+  // }
   return (
     <div className="flex h-screen overflow-hidden">
       <UserProvider user={user}>

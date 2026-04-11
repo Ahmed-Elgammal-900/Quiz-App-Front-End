@@ -8,9 +8,18 @@ import {
 } from "@/components/ui/system/dropdown-menu"
 import { useUser } from "@/hooks/useUser"
 import { logoutAction } from "@/actions/auth.action"
+import { toast } from "sonner"
 
 export function UserMenu() {
   const user = useUser()
+
+  const handleLogout = async () => {
+    const res = await logoutAction()
+    if (res?.success === false) {
+      toast.error(res.message)
+    }
+  }
+
   return (
     <>
       {/* Desktop — inside sidenav */}
@@ -39,7 +48,7 @@ export function UserMenu() {
           >
             <DropdownMenuItem
               className="text-destructive hover:cursor-pointer"
-              onClick={logoutAction}
+              onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
               Logout
@@ -66,7 +75,7 @@ export function UserMenu() {
           >
             <DropdownMenuItem
               className="text-destructive hover:cursor-pointer"
-              onClick={logoutAction}
+              onClick={handleLogout}
             >
               <LogOut className="mr-2 h-4 w-4" />
               Logout

@@ -18,6 +18,10 @@ export default function ConfirmPassword({
           placeholder="••••••••"
           id="confirm-password"
           name="confirm-password"
+          aria-invalid={Boolean(confirmPasswordError)}
+          aria-describedby={
+            confirmPasswordError ? "confirm-password-error" : undefined
+          }
         />
       </div>
       {confirmPasswordError && <FieldError>{confirmPasswordError}</FieldError>}

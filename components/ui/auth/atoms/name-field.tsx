@@ -18,6 +18,8 @@ export default function NameField({
           id="name"
           className={`ps-10 focus:border-primary ${nameError && "border-destructive"}`}
           placeholder="Enter Your Name"
+          aria-invalid={Boolean(nameError)}
+          aria-describedby={nameError ? "name-error" : undefined}
         />
       </div>
       {nameError && <FieldError>{nameError}</FieldError>}

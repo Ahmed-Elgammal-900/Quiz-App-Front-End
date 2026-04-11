@@ -18,7 +18,9 @@ export default function EmailField({
           name="email"
           className={`ps-9 focus:border-primary ${emailError && "border-destructive"}`}
           placeholder="Enter your Email"
-        ></Input>
+          aria-invalid={Boolean(emailError)}
+          aria-describedby={emailError ? "email-error" : undefined}
+        />
       </div>
       {emailError && <FieldError>{emailError}</FieldError>}
     </Field>
