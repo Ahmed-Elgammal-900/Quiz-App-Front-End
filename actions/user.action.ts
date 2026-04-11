@@ -17,7 +17,7 @@ export async function deleteUserAction() {
       })
     }
   } catch (error) {
-    console.error("deleteUserAction error:", error)
+    console.error(error)
     return { success: false, message: "An unexpected error occurred" }
   }
   redirect("/login")

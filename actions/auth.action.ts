@@ -355,7 +355,8 @@ export async function changePasswordAction(
 
   try {
     const cookieStore = await cookies()
-    const res = await changePassword(parsed.data, cookieStore)
+    const accessToken = cookieStore.get("access_token")?.value
+    const res = await changePassword(parsed.data, accessToken ?? "")
     const { data } = await res.json()
 
     if (!res.ok) {

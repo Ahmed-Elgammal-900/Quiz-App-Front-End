@@ -4,6 +4,7 @@ import { Button } from "../../system/button"
 import { toast } from "sonner"
 import { useState } from "react"
 import { deleteUserAction } from "@/actions/user.action"
+import { isRedirectError } from "next/dist/client/components/redirect-error"
 
 export default function DeleteAccount() {
   const [isLoading, setIsLoading] = useState(false)
@@ -12,9 +13,14 @@ export default function DeleteAccount() {
     setIsLoading(true)
     try {
       const response = await deleteUserAction()
-      toast.error(response.message || "Something went wrong")
+      if (response && !response.success) {
+        toast.error(response.message || "Something went wrong")
+      }
     } catch (error) {
-      toast.error("An unexpected error occurred")
+      if (!isRedirectError(error)) {
+        console.error(error)
+        toast.error("An unexpected error occurred")
+      }
     } finally {
       setIsLoading(false)
     }

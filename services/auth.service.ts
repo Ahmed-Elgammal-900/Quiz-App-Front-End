@@ -6,7 +6,6 @@ import {
   RegisterInput,
   ResetPasswordInput,
 } from "@/validations/auth.schema"
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 
 export async function login(body: LoginInput) {
   return fetch(`${process.env.API_URL}/auth/login`, {
@@ -68,12 +67,15 @@ export async function resendOtp(body: { id: string }) {
   })
 }
 
-export async function changePassword(body: changePasswordInput, cookieStore: ReadonlyRequestCookies) {
+export async function changePassword(
+  body: changePasswordInput,
+  accessToken: string
+) {
   return fetch(`${process.env.API_URL}/auth/change-password`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Cookie: cookieStore.toString(),
+      Cookie: `access_token=${accessToken}`,
     },
     body: JSON.stringify(body),
   })
