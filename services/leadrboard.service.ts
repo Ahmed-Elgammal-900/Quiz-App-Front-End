@@ -15,6 +15,7 @@ export async function getTop3(): Promise<LeaderboardEntry[]> {
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/top-three`, {
       headers: { Cookie: cookie.toString() },
+      cache: "no-store",
     })
     if (!res.ok) {
       const errorText = await res.text()
@@ -38,6 +39,7 @@ export async function getUserRank(): Promise<UserRank> {
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/my-rank`, {
       headers: { Cookie: cookie.toString() },
+      cache: "no-store",
     })
     if (!res.ok) {
       const errorText = await res.text()
@@ -68,6 +70,7 @@ export async function getLeaderBoard(
       `${process.env.API_URL}/quizzes/leaderboard?page=${page}&limit=${limit}`,
       {
         headers: { Cookie: cookie.toString() },
+        cache: "no-store",
       }
     )
     if (!res.ok) {

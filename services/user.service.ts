@@ -31,7 +31,6 @@ export async function deleteUser() {
     const res = await fetch(`${process.env.API_URL}/user`, {
       method: "DELETE",
       headers: { Cookie: cookieStore.toString() },
-      cache: "no-store",
     })
 
     if (!res.ok) {

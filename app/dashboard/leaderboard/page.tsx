@@ -13,10 +13,17 @@ export default async function Leaderboard({
 }: {
   searchParams: Promise<{ page?: string; limit?: string }>
 }) {
-  const { page, limit } = await searchParams
+  const { page: rawPage, limit: rawLimit } = await searchParams
+  const page = Number.parseInt(rawPage ?? "1", 10)
+  const limit = Number.parseInt(rawLimit ?? "10", 10)
 
-  if (!page || !limit) {
-    redirect(`/dashboard/leaderboard?page=${page ?? 1}&limit=${limit ?? 10}`)
+  if (
+    !Number.isFinite(page) ||
+    page < 1 ||
+    !Number.isFinite(limit) ||
+    limit < 1
+  ) {
+    redirect("/dashboard/leaderboard?page=1&limit=10")
   }
   return (
     <section className="mt-3">
@@ -30,7 +37,7 @@ export default async function Leaderboard({
       </Suspense>
 
       <Suspense fallback={<LeaderboardListSkeleton />}>
-        <LeaderboardList page={Number(page)} limit={Number(limit)} />
+        <LeaderboardList page={page} limit={limit} />
       </Suspense>
     </section>
   )

@@ -9,7 +9,10 @@ export default async function LeaderboardList({
   page?: number
   limit?: number
 }) {
-  const leaderboardList = await getLeaderBoard(page ?? 1, limit ?? 10)
+  const currentPage = page ?? 1
+  const currentLimit = limit ?? 10
+  const leaderboardList = await getLeaderBoard(currentPage, currentLimit)
+  const rankOffset = (currentPage - 1) * currentLimit
   return (
     <>
       <section className="relative mt-20">
@@ -17,9 +20,10 @@ export default async function LeaderboardList({
           {leaderboardList.data.map(({ userId, name, totalScore }, i) => (
             <UserRank
               key={userId}
+              userId={userId}
               name={name}
               score={totalScore}
-              rank={i + 1}
+              rank={rankOffset + i + 1}
             />
           ))}
         </div>

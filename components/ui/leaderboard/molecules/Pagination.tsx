@@ -8,11 +8,13 @@ import { ArrowBigLeft, ArrowBigRight } from "lucide-react"
 export default function Pagination({ totalPages }: { totalPages: number }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const page = Number(searchParams.get("page") ?? 1)
+  const parsedPage = Number.parseInt(searchParams.get("page") ?? "1", 10)
+  const page = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1
 
   const goToPage = (newPage: number) => {
+    const safePage = Math.min(totalPages, Math.max(1, newPage))
     const params = new URLSearchParams(searchParams.toString())
-    params.set("page", String(newPage))
+    params.set("page", String(safePage))
     router.push(`?${params.toString()}`)
   }
   return (
@@ -20,6 +22,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
       <Button
         variant="outline"
         size="icon"
+        aria-label="Go to previous page"
         disabled={page <= 1}
         onClick={() => goToPage(page - 1)}
       >
@@ -62,6 +65,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
       <Button
         variant="outline"
         size="icon"
+        aria-label="Go to next page"
         disabled={page >= totalPages}
         onClick={() => goToPage(page + 1)}
       >

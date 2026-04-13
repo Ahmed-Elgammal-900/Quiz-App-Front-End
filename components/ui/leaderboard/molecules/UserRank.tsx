@@ -7,17 +7,19 @@ export default function UserRank({
   name,
   rank,
   score,
+  userId,
 }: {
   name: string
   score: number
   rank: number
+  userId: string
 }) {
   let config
   if (rank <= 3) {
     config = topThreeConfig.find((c) => c.rank === rank)
   }
   const user = useUser()
-  const isCurrentUser = user?.name === name
+  const isCurrentUser = user?.id === userId
   return (
     <div
       className={cn(
