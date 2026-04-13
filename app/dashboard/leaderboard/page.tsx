@@ -1,1 +1,37 @@
-export default function Leaderboard() {}
+import LeaderboardHeader from "@/components/ui/leaderboard/atoms/LeaderboardHeader"
+import LeaderboardList from "@/components/ui/leaderboard/organisms/LeaderboardList"
+import LeaderboardListSkeleton from "@/components/ui/leaderboard/organisms/LeaderboardListSkeleton"
+import Top3 from "@/components/ui/leaderboard/organisms/Top3"
+import Top3Skeleton from "@/components/ui/leaderboard/organisms/Top3Skeleton"
+import UserRankSection from "@/components/ui/leaderboard/molecules/UserRankSection"
+import UserRankSectionSkeleton from "@/components/ui/leaderboard/molecules/UserRankSectionSkeleton"
+import { redirect } from "next/navigation"
+import { Suspense } from "react"
+
+export default async function Leaderboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; limit?: string }>
+}) {
+  const { page, limit } = await searchParams
+
+  if (!page || !limit) {
+    redirect(`/dashboard/leaderboard?page=${page ?? 1}&limit=${limit ?? 10}`)
+  }
+  return (
+    <section className="mt-3">
+      <LeaderboardHeader />
+      <Suspense fallback={<Top3Skeleton />}>
+        <Top3 />
+      </Suspense>
+
+      <Suspense fallback={<UserRankSectionSkeleton />}>
+        <UserRankSection />
+      </Suspense>
+
+      <Suspense fallback={<LeaderboardListSkeleton />}>
+        <LeaderboardList page={Number(page)} limit={Number(limit)} />
+      </Suspense>
+    </section>
+  )
+}
