@@ -12,7 +12,8 @@ export default async function LeaderboardList({
   const currentPage = page ?? 1
   const currentLimit = limit ?? 10
   const leaderboardList = await getLeaderBoard(currentPage, currentLimit)
-  const rankOffset = (currentPage - 1) * currentLimit
+  const rankOffset =
+    (leaderboardList.meta.page - 1) * leaderboardList.meta.limit
   return (
     <>
       <section className="relative mt-20">
