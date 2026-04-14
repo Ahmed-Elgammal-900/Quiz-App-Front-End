@@ -31,7 +31,7 @@ export async function getStats(): Promise<Stats> {
 export async function getBadges(): Promise<Badge[]> {
   const cookieStore = await cookies()
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/badges`, {
+    const res = await fetch(`${process.env.API_URL}/quizzes/earned-badges`, {
       headers: { Cookie: cookieStore.toString() },
       cache: "no-store",
     })
