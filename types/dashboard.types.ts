@@ -1,10 +1,11 @@
+import { BadgeTitle } from "@/config/badges.config"
 import { QuizStatus } from "@/constants/quiz-status.constant"
 import { LucideIcon } from "lucide-react"
 
 type StatCardVariant = "default" | "full"
 
 export interface BadgeProps {
-  badgeTitle: string
+  badgeTitle: BadgeTitle
   earned?: boolean
 }
 

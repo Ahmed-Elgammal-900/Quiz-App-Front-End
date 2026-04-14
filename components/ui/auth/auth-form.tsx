@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { ActionState, AuthFormProps } from "@/types/auth.types"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { VARIANT_CONFIG } from "@/config/auth.config"
-import { FormFields } from "@/utils/auth-field-generator"
+import { FormFields } from "@/utils/auth-field-generator.util"
 
 export default function AuthForm({ variant, action, token }: AuthFormProps) {
   const boundAction =

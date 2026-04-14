@@ -1,9 +1,9 @@
-import { badgesConfig, BadgeTitle } from "@/config/badges.config"
+import { badgesConfig } from "@/config/badges.config"
 import { cn } from "@/lib/utils"
 import { BadgeProps } from "@/types/dashboard.types"
 
 export default function Badge({ badgeTitle, earned = false }: BadgeProps) {
-  const config = badgesConfig[badgeTitle as BadgeTitle]
+  const config = badgesConfig[badgeTitle]
 
   if (!config) return null
 

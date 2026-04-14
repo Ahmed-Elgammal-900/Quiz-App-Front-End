@@ -1,14 +1,9 @@
 import { cn } from "@/lib/utils"
 import BadgeIcon from "../atoms/BadgeIcon"
 import { CircleCheck } from "lucide-react"
+import { BadgeProps } from "@/types/dashboard.types"
 
-export default function BadgeCard({
-  badgeTitle,
-  earned,
-}: {
-  badgeTitle: string
-  earned: boolean
-}) {
+export default function BadgeCard({ badgeTitle, earned }: BadgeProps) {
   return (
     <div
       className={cn(

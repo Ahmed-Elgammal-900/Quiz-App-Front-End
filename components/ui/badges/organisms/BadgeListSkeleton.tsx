@@ -1,4 +1,4 @@
-import BadgesIndicatorSkeleton from "../atoms/BadgesIndicatorSkeleton"
+import BadgesIndicatorSkeleton from "../molecules/BadgesIndicatorSkeleton"
 import BadgeCardSkeleton from "../molecules/BadgeCardSkeleton"
 
 export default function BadgesListSkeleton() {

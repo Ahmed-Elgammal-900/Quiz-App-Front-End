@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { BadgeProps } from "@/types/dashboard.types"
 
 export default function BadgeIcon({ badgeTitle, earned = false }: BadgeProps) {
-  const config = badgesConfig[badgeTitle as BadgeTitle]
+  const config = badgesConfig[badgeTitle]
 
   if (!config) return null
 
