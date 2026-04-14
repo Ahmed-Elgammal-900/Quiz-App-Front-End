@@ -1,6 +1,6 @@
 "use server"
 import { deleteUser } from "@/services/user.service"
-import { parseSetCookieHeader } from "@/utils/cookie"
+import { parseSetCookieHeader } from "@/utils/cookie.util"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 

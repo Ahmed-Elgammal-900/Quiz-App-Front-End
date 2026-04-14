@@ -20,7 +20,7 @@ import {
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { ActionState } from "@/types/auth.types"
-import { parseSetCookieHeader } from "@/utils/cookie"
+import { parseSetCookieHeader } from "@/utils/cookie.util"
 
 export async function registerAction(
   _prevState: ActionState,
