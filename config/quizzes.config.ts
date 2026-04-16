@@ -11,6 +11,7 @@ import {
   Binary,
 } from "lucide-react"
 import { QuizConfig } from "../types/config.types"
+import { QuizStatus } from "@/constants/quiz-status.constant"
 
 export const quizzesConfig: Record<string, QuizConfig> = {
   "React & Frontend": {
@@ -83,5 +84,29 @@ export const quizzesConfig: Record<string, QuizConfig> = {
     iconColor: "text-green-500",
     bgColor: "bg-green-50 dark:bg-green-950",
     shadow: "shadow-green-500/30",
+  },
+}
+
+export const buttonQuizConfig = {
+  [QuizStatus.COMPLETED]: {
+    label: "Re-Attempt Quiz",
+    styles: "bg-indigo-500 text-white hover:bg-indigo-600",
+  },
+  [QuizStatus.PAUSED]: {
+    label: "Resume Quiz",
+    styles: "bg-blue-500 text-white hover:bg-blue-600",
+  },
+  [QuizStatus.TIMEOUT]: {
+    label: "Re-Attempt Quiz",
+    styles: "bg-red-600 text-white hover:bg-red-700",
+  },
+  [QuizStatus.IN_PROGRESS]: {
+    label: "Resume Quiz",
+    styles:
+      "from-amber-400 to-amber-500 bg-linear-to-br text-black hover:from-amber-500 hover:to-amber-600",
+  },
+  [QuizStatus.PASSED]: {
+    label: "Review Quiz",
+    styles: "bg-emerald-600 text-white hover:bg-emerald-700",
   },
 }

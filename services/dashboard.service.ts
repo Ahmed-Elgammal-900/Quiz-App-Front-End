@@ -50,7 +50,7 @@ export async function getBadges(): Promise<Badge[]> {
   }
 }
 
-export async function getActivities(): Promise<Activity[]> {
+export async function getActivities(): Promise<Activity> {
   const cookieStore = await cookies()
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/activities`, {
@@ -62,7 +62,7 @@ export async function getActivities(): Promise<Activity[]> {
       throw new Error(errorText)
     }
     const { data } = await res.json()
-    const parsed = z.array(ActivitySchema).safeParse(data)
+    const parsed = ActivitySchema.safeParse(data)
     if (!parsed.success)
       throw new Error(`Invalid activities shape: ${parsed.error}`)
     return parsed.data

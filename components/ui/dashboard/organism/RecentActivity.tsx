@@ -20,7 +20,21 @@ export default async function RecentActivity() {
             </div>
           ) : (
             activities.map(
-              ({ id, quiz: { title }, attemptAt, score, status, passed }) => (
+              ({
+                id,
+                quiz: {
+                  id: quizId,
+                  title,
+                  description,
+                  timeInSeconds,
+                  questionsCount,
+                },
+                attemptAt,
+                score,
+                status,
+                passed,
+                remainingTimeSeconds,
+              }) => (
                 <ActivityCard
                   key={id}
                   title={title}
@@ -28,6 +42,10 @@ export default async function RecentActivity() {
                   score={score}
                   status={status}
                   passed={passed}
+                  quizId={quizId}
+                  description={description}
+                  timeInSeconds={remainingTimeSeconds ?? timeInSeconds}
+                  questionsCount={questionsCount}
                 />
               )
             )

@@ -18,16 +18,25 @@ export const BadgeSchema = z.object({
   badgeTitle: BadgeTitleSchema,
 })
 
-export const ActivitySchema = z.object({
+const QuizSchema = z.object({
   id: z.string(),
-  attemptAt: z.union([z.date(), z.string()]),
-  score: z.number(),
-  status: z.enum(Object.values(QuizStatus) as [QuizStatus, ...QuizStatus[]]),
-  passed: z.boolean(),
-  quiz: z.object({
-    title: z.string(),
-  }),
+  title: z.string(),
+  description: z.string(),
+  timeInSeconds: z.number(),
+  questionsCount: z.number(),
 })
+
+export const ActivitySchema = z.array(
+  z.object({
+    id: z.string(),
+    status: z.enum(Object.values(QuizStatus) as [QuizStatus, ...QuizStatus[]]),
+    score: z.number(),
+    passed: z.boolean(),
+    attemptAt: z.date().or(z.iso.datetime()),
+    remainingTimeSeconds: z.number(),
+    quiz: QuizSchema,
+  })
+)
 
 export type Stats = z.infer<typeof StatsSchema>
 export type Badge = z.infer<typeof BadgeSchema>

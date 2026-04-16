@@ -15,6 +15,10 @@ export interface ActivityCardProps {
   score: number
   status: QuizStatus
   passed: boolean
+  quizId: string
+  description: string
+  timeInSeconds: number
+  questionsCount: number
 }
 
 export interface StatCardProps {
