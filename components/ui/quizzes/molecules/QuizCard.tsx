@@ -30,43 +30,36 @@ export default function QuizCard({
   signedTime: string
 }) {
   const { open, data, openModal, closeModal } = useQuizModal()
-  const Quizconfig = quizzesConfig[title]
-  if (!Quizconfig) throw new Error(`Invalid quiz config for ${title}`)
+  const quizConfig = quizzesConfig[title]
+  if (!quizConfig) throw new Error(`Invalid quiz config for ${title}`)
   const buttonConfig = buttonQuizConfig[status as QuizStatus]
-  const { icon: Icon, iconColor, bgColor } = Quizconfig
+  const { icon: Icon, iconColor, bgColor } = quizConfig
+
+  const handleOpen = () =>
+    openModal({
+      title,
+      score,
+      questionsCount,
+      status,
+      passed,
+      timeInSeconds,
+      description,
+      quizId,
+      signedTime,
+    })
   return (
     <>
       <div
         className="flex min-h-20 items-center justify-between gap-x-4 rounded-xl bg-card p-5 md:min-h-70 md:flex-col md:items-stretch md:justify-start md:gap-x-0"
         role="button"
         tabIndex={0}
-        onKeyDown={(e) =>
-          e.key === "Enter" &&
-          openModal({
-            title,
-            score,
-            questionsCount,
-            status,
-            passed,
-            timeInSeconds,
-            description,
-            quizId,
-            signedTime,
-          })
-        }
-        onClick={() =>
-          openModal({
-            title,
-            score,
-            questionsCount,
-            status,
-            passed,
-            timeInSeconds,
-            description,
-            quizId,
-            signedTime,
-          })
-        }
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            handleOpen()
+          }
+        }}
+        onClick={handleOpen}
       >
         <div className="flex w-full items-center gap-4 md:flex-col md:items-start">
           <div className="w-fit-content flex items-center justify-between md:w-full">
@@ -118,17 +111,7 @@ export default function QuizCard({
           )}
           onClick={(e) => {
             e.stopPropagation()
-            openModal({
-              title,
-              score,
-              questionsCount,
-              status,
-              passed,
-              timeInSeconds,
-              description,
-              quizId,
-              signedTime,
-            })
+            handleOpen()
           }}
         >
           {buttonConfig ? buttonConfig.label : "Attempt Quiz"}

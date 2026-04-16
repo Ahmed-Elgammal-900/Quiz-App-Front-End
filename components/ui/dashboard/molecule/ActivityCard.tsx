@@ -30,39 +30,27 @@ export default function ActivityCard({
   if (!config) throw new Error(`Invalid quiz config for ${title}`)
 
   const { icon: Icon, iconColor, bgColor } = config
+
+  const handleOpen = () =>
+    openModal({
+      title,
+      score,
+      questionsCount,
+      status,
+      passed,
+      timeInSeconds,
+      description,
+      quizId,
+      signedTime,
+    })
   return (
     <>
       <div
         role="button"
         className="group flex w-full items-center gap-x-4 rounded-xl bg-card p-4 hover:cursor-pointer md:p-5"
         tabIndex={0}
-        onKeyDown={(e) =>
-          e.key === "Enter" &&
-          openModal({
-            title,
-            score,
-            questionsCount,
-            status,
-            passed,
-            timeInSeconds,
-            description,
-            quizId,
-            signedTime,
-          })
-        }
-        onClick={() =>
-          openModal({
-            title,
-            score,
-            questionsCount,
-            status,
-            passed,
-            timeInSeconds,
-            description,
-            quizId,
-            signedTime,
-          })
-        }
+        onKeyDown={(e) => e.key === "Enter" && handleOpen()}
+        onClick={handleOpen}
       >
         <div
           className={cn(

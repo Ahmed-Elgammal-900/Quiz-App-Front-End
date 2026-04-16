@@ -4,17 +4,14 @@ import { getQuizzes } from "@/services/Quizzes.service"
 
 export default async function QuizzesList({ search }: { search?: string }) {
   const quizzes = await getQuizzes()
-  const query = search?.trim()
-  const signedQuizzes = quizzes.map((quiz) => ({
+  const query = search?.trim().toLowerCase()
+  const matched = query
+    ? quizzes.filter((q) => q.title.toLowerCase().includes(query))
+    : quizzes
+  const filtered = matched.map((quiz) => ({
     ...quiz,
     signedTime: signTime(quiz.timeInSeconds),
   }))
-
-  const filtered = query
-    ? signedQuizzes.filter((q) =>
-        q.title.toLowerCase().includes(query.toLowerCase())
-      )
-    : signedQuizzes
   if (filtered.length === 0) {
     return (
       <p className="mt-50 h-full text-center text-muted-foreground">
@@ -24,6 +21,7 @@ export default async function QuizzesList({ search }: { search?: string }) {
       </p>
     )
   }
+
   return (
     <div className="mt-5">
       <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
