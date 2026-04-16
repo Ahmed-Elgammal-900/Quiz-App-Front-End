@@ -162,4 +162,20 @@
   .scrollbar:hover {
     scrollbar-color: var(--scrollbar-thumb-hover) transparent;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-grow {
+      animation: none;
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
 }
