@@ -1,4 +1,4 @@
-import { badgesConfig, BadgeTitle } from "@/config/badges.config"
+import { badgesConfig } from "@/config/badges.config"
 import { cn } from "@/lib/utils"
 import { BadgeProps } from "@/types/dashboard.types"
 

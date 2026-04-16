@@ -11,7 +11,7 @@ import { QuizStatusBadge } from "../../dashboard/atom/QuizStatusBadge"
 import { QuizStatus } from "@/constants/quiz-status.constant"
 import { Clock, Hourglass, List } from "lucide-react"
 import { Button } from "../../system/button"
-import { cn } from "@/lib/utils"
+import { cn, signTime } from "@/lib/utils"
 import { buttonQuizConfig } from "@/config/quizzes.config"
 import { useRouter } from "next/navigation"
 
@@ -42,7 +42,9 @@ export function QuizModal({
 }: QuizModalProps) {
   const router = useRouter()
   const redirToQuiz = () => {
-    router.push(`/quiz?id=${quizId}&time=${timeInSeconds}&page=1&limit=10`)
+    router.push(
+      `/quiz/${quizId}?time=${signTime(timeInSeconds)}&page=1&limit=10`
+    )
   }
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600)
@@ -58,7 +60,11 @@ export function QuizModal({
     return `${mins}:${paddedSecs}`
   }
   const hasHours = timeInSeconds >= 3600
-  const buttonConfig = buttonQuizConfig[status as QuizStatus]
+  const effectiveStatus = passed ? QuizStatus.PASSED : (status as QuizStatus)
+  const buttonConfig = effectiveStatus
+    ? buttonQuizConfig[effectiveStatus]
+    : undefined
+  const progress = Math.max(0, Math.min(score ?? 0, 100))
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-background">
@@ -89,11 +95,7 @@ export function QuizModal({
               </div>
             </div>
           </div>
-          {status && (
-            <QuizStatusBadge
-              status={passed ? QuizStatus.PASSED : (status as QuizStatus)}
-            />
-          )}
+          {effectiveStatus && <QuizStatusBadge status={effectiveStatus} />}
         </div>
         <div>
           <p className="mt-5 mb-2 flex items-center gap-x-2">
@@ -103,10 +105,12 @@ export function QuizModal({
         </div>
         {status === QuizStatus.IN_PROGRESS && (
           <div className="my-3 overflow-y-auto">
-            <span className="text-primary capitalize">progress: {score}%</span>
+            <span className="text-primary capitalize">
+              progress: {progress}%
+            </span>
             <div className="mt-5 h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
               <div
-                style={{ width: `${score}%` }}
+                style={{ width: `${progress}%` }}
                 className="animate-grow h-full rounded-full bg-primary"
               />
             </div>

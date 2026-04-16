@@ -26,13 +26,28 @@ export default function ActivityCard({
   const { open, data, openModal, closeModal } = useQuizModal()
   const config = quizzesConfig[title]
 
-  if (!config) return null
+  if (!config) throw new Error(`Invalid quiz config for ${title}`)
 
   const { icon: Icon, iconColor, bgColor } = config
   return (
     <>
       <div
+        role="button"
         className="group flex w-full items-center gap-x-4 rounded-xl bg-card p-4 hover:cursor-pointer md:p-5"
+        tabIndex={0}
+        onKeyDown={(e) =>
+          e.key === "Enter" &&
+          openModal({
+            title,
+            score,
+            questionsCount,
+            status,
+            passed,
+            timeInSeconds,
+            description,
+            quizId,
+          })
+        }
         onClick={() =>
           openModal({
             title,

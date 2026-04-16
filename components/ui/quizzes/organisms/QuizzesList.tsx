@@ -3,16 +3,17 @@ import { getQuizzes } from "@/services/Quizzes.service"
 
 export default async function QuizzesList({ search }: { search?: string }) {
   const quizzes = await getQuizzes()
+  const query = search?.trim()
 
-  const filtered = search
-    ? quizzes.filter((q) =>
-        q.title.toLowerCase().includes(search.toLowerCase())
-      )
+  const filtered = query
+    ? quizzes.filter((q) => q.title.toLowerCase().includes(query.toLowerCase()))
     : quizzes
   if (filtered.length === 0) {
     return (
       <p className="mt-50 h-full text-center text-muted-foreground">
-        No quizzes found for &quot;{search}&quot;
+        {query
+          ? `No quizzes found for "${query}"`
+          : "No quizzes available yet."}
       </p>
     )
   }

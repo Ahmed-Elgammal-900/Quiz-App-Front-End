@@ -10,7 +10,7 @@ export default function QuizzesSearch() {
   const handleSearch = useDebouncedCallback((value: string) => {
     const params = new URLSearchParams()
     if (value) params.set("search", value)
-    router.push(`/dashboard/quizzes?${params.toString()}`)
+    router.replace(`/dashboard/quizzes?${params.toString()}`)
   }, 300)
 
   return (
@@ -19,6 +19,7 @@ export default function QuizzesSearch() {
       <Input
         type="search"
         placeholder="Search for quizzes"
+        aria-label="Search quizzes"
         className="ps-9 lg:max-w-[70%]"
         onChange={(e) => handleSearch(e.target.value)}
       />

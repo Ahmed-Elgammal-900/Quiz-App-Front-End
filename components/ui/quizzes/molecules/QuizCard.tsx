@@ -29,12 +29,28 @@ export default function QuizCard({
 }) {
   const { open, data, openModal, closeModal } = useQuizModal()
   const Quizconfig = quizzesConfig[title]
+  if (!Quizconfig) throw new Error(`Invalid quiz config for ${title}`)
   const buttonConfig = buttonQuizConfig[status as QuizStatus]
   const { icon: Icon, iconColor, bgColor } = Quizconfig
   return (
     <>
       <div
         className="flex min-h-20 items-center justify-between gap-x-4 rounded-xl bg-card p-5 md:min-h-70 md:flex-col md:items-stretch md:justify-start md:gap-x-0"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) =>
+          e.key === "Enter" &&
+          openModal({
+            title,
+            score,
+            questionsCount,
+            status,
+            passed,
+            timeInSeconds,
+            description,
+            quizId,
+          })
+        }
         onClick={() =>
           openModal({
             title,
@@ -96,7 +112,8 @@ export default function QuizCard({
             "mt-auto hidden h-10 hover:cursor-pointer md:block",
             buttonConfig?.styles ?? "hover:bg-primary/80"
           )}
-          onClick={() =>
+          onClick={(e) => {
+            e.stopPropagation()
             openModal({
               title,
               score,
@@ -107,7 +124,7 @@ export default function QuizCard({
               description,
               quizId,
             })
-          }
+          }}
         >
           {buttonConfig ? buttonConfig.label : "Attempt Quiz"}
         </Button>

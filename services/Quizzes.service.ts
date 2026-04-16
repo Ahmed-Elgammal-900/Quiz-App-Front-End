@@ -20,7 +20,7 @@ export async function getQuizzes(): Promise<QuizzesResponse> {
       throw new Error(`Invalid quizzes shape: ${parsed.error}`)
     return parsed.data
   } catch (error) {
-    console.error("Failed to fetch badges", error)
-    throw error instanceof Error ? error : new Error("Failed to fetch badges")
+    console.error("Failed to fetch quizzes", error)
+    throw error instanceof Error ? error : new Error("Failed to fetch quizzes")
   }
 }
