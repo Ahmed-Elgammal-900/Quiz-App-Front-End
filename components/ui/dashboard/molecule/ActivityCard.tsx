@@ -22,6 +22,7 @@ export default function ActivityCard({
   description,
   timeInSeconds,
   questionsCount,
+  signedTime,
 }: ActivityCardProps) {
   const { open, data, openModal, closeModal } = useQuizModal()
   const config = quizzesConfig[title]
@@ -46,6 +47,7 @@ export default function ActivityCard({
             timeInSeconds,
             description,
             quizId,
+            signedTime,
           })
         }
         onClick={() =>
@@ -58,6 +60,7 @@ export default function ActivityCard({
             timeInSeconds,
             description,
             quizId,
+            signedTime,
           })
         }
       >

@@ -17,6 +17,7 @@ export default function QuizCard({
   timeInSeconds,
   description,
   quizId,
+  signedTime,
 }: {
   title: string
   score: number | null
@@ -26,6 +27,7 @@ export default function QuizCard({
   timeInSeconds: number
   description: string
   quizId: string
+  signedTime: string
 }) {
   const { open, data, openModal, closeModal } = useQuizModal()
   const Quizconfig = quizzesConfig[title]
@@ -49,6 +51,7 @@ export default function QuizCard({
             timeInSeconds,
             description,
             quizId,
+            signedTime,
           })
         }
         onClick={() =>
@@ -61,6 +64,7 @@ export default function QuizCard({
             timeInSeconds,
             description,
             quizId,
+            signedTime,
           })
         }
       >
@@ -123,6 +127,7 @@ export default function QuizCard({
               timeInSeconds,
               description,
               quizId,
+              signedTime,
             })
           }}
         >

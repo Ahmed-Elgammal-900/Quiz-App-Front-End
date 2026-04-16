@@ -11,7 +11,7 @@ import { QuizStatusBadge } from "../../dashboard/atom/QuizStatusBadge"
 import { QuizStatus } from "@/constants/quiz-status.constant"
 import { Clock, Hourglass, List } from "lucide-react"
 import { Button } from "../../system/button"
-import { cn, signTime } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { buttonQuizConfig } from "@/config/quizzes.config"
 import { useRouter } from "next/navigation"
 
@@ -26,6 +26,7 @@ interface QuizModalProps {
   timeInSeconds: number
   description: string
   quizId: string
+  signedTime: string
 }
 
 export function QuizModal({
@@ -39,12 +40,11 @@ export function QuizModal({
   timeInSeconds,
   description,
   quizId,
+  signedTime,
 }: QuizModalProps) {
   const router = useRouter()
   const redirToQuiz = () => {
-    router.push(
-      `/quiz/${quizId}?time=${signTime(timeInSeconds)}&page=1&limit=10`
-    )
+    router.push(`/quiz/${quizId}?time=${signedTime}&page=1&limit=10`)
   }
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600)

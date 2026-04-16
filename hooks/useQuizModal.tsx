@@ -9,6 +9,7 @@ interface ModalData {
   timeInSeconds: number
   description: string
   quizId: string
+  signedTime: string
 }
 
 export function useQuizModal() {

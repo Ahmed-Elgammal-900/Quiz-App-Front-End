@@ -19,6 +19,7 @@ export interface ActivityCardProps {
   description: string
   timeInSeconds: number
   questionsCount: number
+  signedTime: string
 }
 
 export interface StatCardProps {
