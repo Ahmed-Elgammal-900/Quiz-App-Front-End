@@ -1,17 +1,20 @@
-import { UserSchema } from "@/validations/user.schema"
 import { cookies } from "next/headers"
+import { UserSchema } from "@/validations/user.schema"
+import type { UserSchemaType } from "@/validations/user.schema"
 
-export async function getUser() {
+export async function getUser(): Promise<UserSchemaType | null> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/user`, {
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
 
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
 
     const { data } = await res.json()
@@ -25,17 +28,19 @@ export async function getUser() {
   }
 }
 
-export async function deleteUser() {
+export async function deleteUser(): Promise<Response | null> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/user`, {
       method: "DELETE",
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
     })
 
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
 
     return res

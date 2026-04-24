@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { refreshTokens, verifyAccessToken } from "./services/auth.service"
 
-const protectedRoutes = ["/dashboard"]
+const protectedRoutes = ["/dashboard", "/quiz", "/result"]
 
 const authRoutes = [
   "/login",

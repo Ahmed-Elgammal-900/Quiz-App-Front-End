@@ -12,6 +12,7 @@ export default async function LeaderboardList({
   const currentPage = page ?? 1
   const currentLimit = limit ?? 10
   const leaderboardList = await getLeaderBoard(currentPage, currentLimit)
+  if (!leaderboardList) return null
   const rankOffset =
     (leaderboardList.meta.page - 1) * leaderboardList.meta.limit
   return (

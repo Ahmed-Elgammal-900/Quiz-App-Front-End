@@ -6,9 +6,7 @@ export default function WelcomeHeader() {
   const firstName = user?.name?.trim().split(/\s+/)[0] ?? "there"
   return (
     <>
-      <h1 className="text-2xl font-bold md:text-3xl">
-        Welcome Back, {firstName}!
-      </h1>
+      <h1 className="text-2xl font-bold md:text-3xl">Welcome, {firstName}!</h1>
       <p className="text-xs text-muted-foreground md:text-base">
         Ready to Boost your intellect
       </p>

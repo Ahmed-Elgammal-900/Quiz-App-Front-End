@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import { QuizStatusBadge } from "../atom/QuizStatusBadge"
-import { ActivityCardProps } from "@/types/dashboard.types"
+import type { ActivityCardProps } from "@/types/dashboard.types"
 import { useQuizModal } from "@/hooks/useQuizModal"
 import { QuizModal } from "../../quizzes/molecules/QuizModal"
 import { ChevronRight } from "lucide-react"
@@ -23,6 +23,8 @@ export default function ActivityCard({
   timeInSeconds,
   questionsCount,
   signedTime,
+  signedStatus,
+  progress,
 }: ActivityCardProps) {
   const { open, data, openModal, closeModal } = useQuizModal()
   const config = quizzesConfig[title]
@@ -34,7 +36,6 @@ export default function ActivityCard({
   const handleOpen = () =>
     openModal({
       title,
-      score,
       questionsCount,
       status,
       passed,
@@ -42,6 +43,8 @@ export default function ActivityCard({
       description,
       quizId,
       signedTime,
+      signedStatus,
+      progress,
     })
   return (
     <>
@@ -64,7 +67,9 @@ export default function ActivityCard({
           <div>
             <h4 className="text-sm">{title}</h4>
             <div className="flex items-center">
-              <p className="text-xs text-muted-foreground">score: {score}</p>
+              <p className="text-xs text-muted-foreground">
+                score: {Math.floor(score)}
+              </p>
               <span className="mx-1 size-1 rounded-full bg-muted-foreground" />
               <p className="text-xs text-muted-foreground">
                 {dayjs(attemptAt).fromNow()}

@@ -20,6 +20,8 @@ export interface ActivityCardProps {
   timeInSeconds: number
   questionsCount: number
   signedTime: string
+  signedStatus: string
+  progress: number | null
 }
 
 export interface StatCardProps {

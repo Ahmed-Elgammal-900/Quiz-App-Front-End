@@ -1,22 +1,24 @@
 import { cookies } from "next/headers"
+import z from "zod"
 import {
   ActivitySchema,
   BadgeSchema,
   StatsSchema,
 } from "@/validations/dashboard.schema"
 import type { Stats, Badge, Activity } from "@/validations/dashboard.schema"
-import z from "zod"
 
-export async function getStats(): Promise<Stats> {
+export async function getStats(): Promise<Stats | null> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/stats`, {
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
     const { data } = await res.json()
     const parsed = StatsSchema.safeParse(data)
@@ -28,16 +30,18 @@ export async function getStats(): Promise<Stats> {
   }
 }
 
-export async function getBadges(): Promise<Badge[]> {
+export async function getBadges(): Promise<Badge[] | null> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/earned-badges`, {
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
     const { data } = await res.json()
     const parsed = z.array(BadgeSchema).safeParse(data)
@@ -50,16 +54,18 @@ export async function getBadges(): Promise<Badge[]> {
   }
 }
 
-export async function getActivities(): Promise<Activity> {
+export async function getActivities(): Promise<Activity | null> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/activities`, {
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
     const { data } = await res.json()
     const parsed = ActivitySchema.safeParse(data)

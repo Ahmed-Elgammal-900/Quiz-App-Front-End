@@ -1,6 +1,6 @@
 import { badgesConfig } from "@/config/badges.config"
 import { cn } from "@/lib/utils"
-import { BadgeProps } from "@/types/dashboard.types"
+import type { BadgeProps } from "@/types/dashboard.types"
 
 export default function BadgeIcon({ badgeTitle, earned = false }: BadgeProps) {
   const config = badgesConfig[badgeTitle]

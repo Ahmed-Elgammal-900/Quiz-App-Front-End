@@ -3,23 +3,22 @@ import z from "zod"
 const LeaderboardEntrySchema = z.object({
   userId: z.uuid(),
   name: z.string(),
-  totalScore: z.coerce.number(),
+  totalScore: z.int(),
 })
 
 export const UserRankSchema = z.object({
   rank: z.number(),
   userId: z.uuid(),
   name: z.string(),
-  totalScore: z.number(),
+  totalScore: z.int(),
 })
 
 export const LeaderboardSchema = z.object({
   data: z.array(LeaderboardEntrySchema),
   meta: z.object({
-    page: z.number(),
-    limit: z.number(),
-    total: z.number(),
-    totalPages: z.number(),
+    page: z.int(),
+    limit: z.int(),
+    totalPages: z.int(),
   }),
 })
 

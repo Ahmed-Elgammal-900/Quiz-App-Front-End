@@ -1,4 +1,9 @@
+import { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Forget Password Success",
+}
 
 export default function ForgetPasswordSuccess() {
   return (

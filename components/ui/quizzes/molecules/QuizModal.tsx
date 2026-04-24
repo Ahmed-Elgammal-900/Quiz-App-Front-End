@@ -14,38 +14,28 @@ import { Button } from "../../system/button"
 import { cn } from "@/lib/utils"
 import { buttonQuizConfig } from "@/config/quizzes.config"
 import { useRouter } from "next/navigation"
-
-interface QuizModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  title: string
-  score: number | null
-  questionsCount: number
-  status: string | null
-  passed: boolean | null
-  timeInSeconds: number
-  description: string
-  quizId: string
-  signedTime: string
-}
+import type { QuizModalProps } from "@/types/quizzes.types"
 
 export function QuizModal({
   open,
   onOpenChange,
   title,
   questionsCount,
-  score,
   status,
   passed,
   timeInSeconds,
   description,
   quizId,
   signedTime,
+  signedStatus,
+  progress,
 }: QuizModalProps) {
   const router = useRouter()
 
   const redirToQuiz = () => {
-    router.push(`/quiz/${quizId}?time=${signedTime}&page=1&limit=10`)
+    router.push(
+      `/quiz/${quizId}?${effectiveStatus !== QuizStatus.PASSED ? `time=${signedTime}` : ""}&status=${signedStatus ?? null}`
+    )
   }
 
   const formatTime = (seconds: number) => {
@@ -82,21 +72,24 @@ export function QuizModal({
         </DialogHeader>
 
         <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-3 rounded-xl border bg-card px-4 py-2">
-            <div className="text-primary">{icon}</div>
+          {effectiveStatus !== QuizStatus.PASSED && (
+            <div className="inline-flex items-center gap-3 rounded-xl border bg-card px-4 py-2">
+              <div className="text-primary">{icon}</div>
 
-            <div className="flex flex-col">
-              <span className="text-[10px] leading-none font-bold tracking-tighter text-slate-400 uppercase">
-                {label}
-              </span>
-
-              <div className="flex items-baseline gap-1">
-                <span className="font-mono text-2xl font-bold tracking-tight text-slate-800 tabular-nums dark:text-slate-200">
-                  {formatTime(timeInSeconds)}
+              <div className="flex flex-col">
+                <span className="text-[10px] leading-none font-bold tracking-tighter text-slate-400 uppercase">
+                  {label}
                 </span>
+
+                <div className="flex items-baseline gap-1">
+                  <span className="font-mono text-2xl font-bold tracking-tight text-slate-800 tabular-nums dark:text-slate-200">
+                    {formatTime(timeInSeconds)}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
           {effectiveStatus && <QuizStatusBadge status={effectiveStatus} />}
         </div>
         <div>
@@ -105,17 +98,17 @@ export function QuizModal({
             <span className="font-semibold">{questionsCount} Questions</span>
           </p>
         </div>
-        {status === QuizStatus.IN_PROGRESS &&
+        {(effectiveStatus === QuizStatus.IN_PROGRESS ||
+          effectiveStatus === QuizStatus.PAUSED) &&
           (() => {
-            const progress = Math.max(0, Math.min(score ?? 0, 100))
             return (
               <div className="my-3 overflow-y-auto">
                 <span className="text-primary capitalize">
-                  progress: {progress}%
+                  progress: {progress ?? 0}%
                 </span>
                 <div className="mt-5 h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
                   <div
-                    style={{ width: `${progress}%` }}
+                    style={{ width: `${progress ?? 0}%` }}
                     className="animate-grow h-full rounded-full bg-primary"
                   />
                 </div>

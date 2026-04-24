@@ -10,16 +10,18 @@ import type {
 } from "@/validations/leaderboard.schema"
 import { cookies } from "next/headers"
 
-export async function getTop3(): Promise<LeaderboardEntry[]> {
-  const cookie = await cookies()
+export async function getTop3(): Promise<LeaderboardEntry[] | null> {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/top-three`, {
-      headers: { Cookie: cookie.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
     const { data } = await res.json()
 
@@ -34,16 +36,18 @@ export async function getTop3(): Promise<LeaderboardEntry[]> {
   }
 }
 
-export async function getUserRank(): Promise<UserRank> {
-  const cookie = await cookies()
+export async function getUserRank(): Promise<UserRank | null> {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/my-rank`, {
-      headers: { Cookie: cookie.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
     const { data } = await res.json()
 
@@ -63,19 +67,21 @@ export async function getUserRank(): Promise<UserRank> {
 export async function getLeaderBoard(
   page: number,
   limit: number
-): Promise<Leaderboard> {
-  const cookie = await cookies()
+): Promise<Leaderboard | null> {
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) return null
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/leaderboard?page=${page}&limit=${limit}`,
       {
-        headers: { Cookie: cookie.toString() },
+        headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
       }
     )
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      const { message } = await res.json()
+      throw new Error(message)
     }
     const { data } = await res.json()
 

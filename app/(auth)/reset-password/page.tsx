@@ -2,6 +2,11 @@ import { resetPasswordAction } from "@/actions/auth.action"
 import AuthForm from "@/components/ui/auth/auth-form"
 import AuthHeader from "@/components/ui/auth/shared/auth-header"
 import { ActionState } from "@/types/auth.types"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Reset Password",
+}
 
 export default async function ResetPassword({
   searchParams,

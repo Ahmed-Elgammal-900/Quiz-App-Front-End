@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { statusConfig } from "@/config/quiz-status.config"
-import { QuizStatusBadgeProps } from "@/types/dashboard.types"
+import type { QuizStatusBadgeProps } from "@/types/dashboard.types"
 
 const quizStatusVariants = cva(
   "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-medium transition-colors",

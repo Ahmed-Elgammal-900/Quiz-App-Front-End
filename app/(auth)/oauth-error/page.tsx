@@ -1,5 +1,10 @@
 import { AlertCircle } from "lucide-react"
+import { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "oauth error",
+}
 
 export default async function AuthError({
   searchParams,
