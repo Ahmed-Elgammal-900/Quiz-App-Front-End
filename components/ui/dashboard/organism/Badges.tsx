@@ -4,6 +4,7 @@ import Badge from "../molecule/Badge"
 
 export default async function Badges() {
   const badges = await getBadges()
+  if(!badges) throw new Error("not found badges")
   return (
     <section
       aria-labelledby="earned-badges-title"

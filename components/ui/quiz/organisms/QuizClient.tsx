@@ -147,6 +147,7 @@ export default function QuizClient({
     return () => {
       cancelled = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -220,7 +221,7 @@ export default function QuizClient({
     try {
       await insertProgressAction(slug as string, currentQuestion.id, optionId)
     } catch (error) {
-      console.error("Failed to save Answer")
+      console.error("Failed to save Answer", error)
     }
   }
 
