@@ -1,0 +1,37 @@
+import { BadgeTitle } from "@/config/badges.config"
+import { QuizStatus } from "@/constants/quiz-status.constant"
+import { LucideIcon } from "lucide-react"
+
+type StatCardVariant = "default" | "full"
+
+export interface BadgeProps {
+  badgeTitle: BadgeTitle
+  earned?: boolean
+}
+
+export interface ActivityCardProps {
+  title: string
+  attemptAt: Date | string
+  status: QuizStatus
+  passed: boolean
+  quizId: string
+  description: string
+  timeInSeconds: number
+  questionsCount: number
+  signedTime: string
+  signedStatus: string
+  progress: number | null
+}
+
+export interface StatCardProps {
+  variant?: StatCardVariant
+  label: string
+  value: number
+  icon: LucideIcon
+  color: string
+}
+
+export interface QuizStatusBadgeProps {
+  status: QuizStatus
+  className?: string
+}
