@@ -1,6 +1,6 @@
 import { deleteUserAnswers } from "@/services/Quizzes.service"
 
-export async function DELETE(req: Request) {
+export async function POST(req: Request) {
   try {
     const { quizId } = await req.json()
     if (!quizId || typeof quizId !== "string") {

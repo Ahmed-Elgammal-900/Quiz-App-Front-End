@@ -7,7 +7,7 @@ import {
 } from "@/validations/dashboard.schema"
 import type { Stats, Badge, Activity } from "@/validations/dashboard.schema"
 
-export async function getStats(): Promise<Stats | null> {
+export async function getStats(): Promise<Stats> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -17,7 +17,13 @@ export async function getStats(): Promise<Stats | null> {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -30,7 +36,7 @@ export async function getStats(): Promise<Stats | null> {
   }
 }
 
-export async function getBadges(): Promise<Badge[] | null> {
+export async function getBadges(): Promise<Badge[]> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -40,7 +46,13 @@ export async function getBadges(): Promise<Badge[] | null> {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -54,7 +66,7 @@ export async function getBadges(): Promise<Badge[] | null> {
   }
 }
 
-export async function getActivities(): Promise<Activity | null> {
+export async function getActivities(): Promise<Activity> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -64,7 +76,13 @@ export async function getActivities(): Promise<Activity | null> {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()

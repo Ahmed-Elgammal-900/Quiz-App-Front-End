@@ -49,10 +49,7 @@ export async function pauseQuizAction(
     return { success: true }
   } catch (error) {
     console.error("Failed to pause quiz", error)
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : "Failed to pause quiz",
-    }
+    throw error instanceof Error ? error : new Error("Failed to pause quiz")
   }
 }
 
@@ -66,7 +63,10 @@ export async function deleteUserAnswersAction(
     console.error("Failed to delete user answers quiz", error)
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Failed to pause quiz",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to delete user answers",
     }
   }
 }

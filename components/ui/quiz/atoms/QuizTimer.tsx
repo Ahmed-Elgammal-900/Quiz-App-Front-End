@@ -51,8 +51,12 @@ const QuizTimer = forwardRef<{ getRemaining: () => number }, QuizTimerProps>(
 
     return (
       <div className="flex w-25 items-center justify-end gap-2 text-sm font-medium">
-        <Clock size={16} />
-        <span className={cn("w-10", remaining <= 60 ? "text-destructive" : "")}>
+        <Clock size={16} aria-hidden="true" />
+        <span
+          aria-live="polite"
+          aria-label={`Time remaining: ${mins} minutes and ${secs} seconds`}
+          className={cn("w-10", remaining <= 60 ? "text-destructive" : "")}
+        >
           {mins}:{secs}
         </span>
       </div>

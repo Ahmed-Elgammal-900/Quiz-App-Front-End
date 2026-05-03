@@ -14,7 +14,7 @@ import type {
 } from "@/validations/quizzes.schema"
 import { cookies } from "next/headers"
 
-export async function getQuizzes(): Promise<QuizzesResponse | null> {
+export async function getQuizzes(): Promise<QuizzesResponse> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -24,7 +24,13 @@ export async function getQuizzes(): Promise<QuizzesResponse | null> {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -43,20 +49,30 @@ export async function getQuizWithQuestions(
   quizId: string,
   page?: number,
   limit?: number
-): Promise<QuizResponse | null> {
+): Promise<QuizResponse> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
+    const params = new URLSearchParams()
+    if (page !== undefined) params.set("page", String(page))
+    if (limit !== undefined) params.set("limit", String(limit))
+    const qs = params.toString() ? `?${params.toString()}` : ""
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/questions?page=${page}&limit=${limit}`,
+      `${process.env.API_URL}/quizzes/${quizId}/questions${qs}`,
       {
         headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -76,7 +92,7 @@ export async function getQuizWithQuestions(
 export async function getQuizProgress(
   quizId: string,
   limit?: number
-): Promise<QuizProgress | null> {
+): Promise<QuizProgress> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -89,7 +105,13 @@ export async function getQuizProgress(
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -106,7 +128,7 @@ export async function getQuizProgress(
   }
 }
 
-export async function getResult(quizId: string): Promise<Result | null> {
+export async function getResult(quizId: string): Promise<Result> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -119,7 +141,13 @@ export async function getResult(quizId: string): Promise<Result | null> {
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -145,7 +173,13 @@ export async function startQuiz(quizId: string) {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
   } catch (error) {
@@ -175,7 +209,13 @@ export async function insertProgress(
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
   } catch (error) {
@@ -204,7 +244,13 @@ export async function pauseQuiz(
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
   } catch (error) {
@@ -212,9 +258,7 @@ export async function pauseQuiz(
   }
 }
 
-export async function getQuestionsIds(
-  quizId: string
-): Promise<QuestionIds | null> {
+export async function getQuestionsIds(quizId: string): Promise<QuestionIds> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -227,7 +271,13 @@ export async function getQuestionsIds(
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -260,7 +310,13 @@ export async function deleteUserAnswers(quizId: string) {
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
   } catch (error) {

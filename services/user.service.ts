@@ -2,7 +2,7 @@ import { cookies } from "next/headers"
 import { UserSchema } from "@/validations/user.schema"
 import type { UserSchemaType } from "@/validations/user.schema"
 
-export async function getUser(): Promise<UserSchemaType | null> {
+export async function getUser(): Promise<UserSchemaType> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -13,7 +13,13 @@ export async function getUser(): Promise<UserSchemaType | null> {
     })
 
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
 
@@ -28,7 +34,7 @@ export async function getUser(): Promise<UserSchemaType | null> {
   }
 }
 
-export async function deleteUser(): Promise<Response | null> {
+export async function deleteUser(): Promise<Response> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -39,7 +45,13 @@ export async function deleteUser(): Promise<Response | null> {
     })
 
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
 

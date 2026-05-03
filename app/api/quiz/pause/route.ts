@@ -7,8 +7,10 @@ export async function POST(req: Request) {
 
     if (
       typeof quizId !== "string" ||
-      typeof pausedAtQuestionIndex !== "number" ||
-      typeof remainingTimeSeconds !== "number"
+      !Number.isFinite(pausedAtQuestionIndex) ||
+      pausedAtQuestionIndex < 0 ||
+      !Number.isFinite(remainingTimeSeconds) ||
+      remainingTimeSeconds < 0
     ) {
       return Response.json(
         { success: false, message: "Invalid payload" },

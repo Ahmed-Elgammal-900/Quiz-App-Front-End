@@ -29,7 +29,8 @@ export default function ResultPage({
 }: ResultProps) {
   const hasNavigatedAway = useRef(false)
   const router = useRouter()
-  const { slug } = useParams()
+  const params = useParams()
+  const slug = typeof params.slug === "string" ? params.slug : undefined
   const config = quizzesConfig[title]
 
   if (!config) throw new Error(`Invalid quiz config for ${title}`)
@@ -40,7 +41,7 @@ export default function ResultPage({
     if (!slug) return
 
     const handleBeforeUnload = () => {
-      if (!hasNavigatedAway.current) return
+      if (hasNavigatedAway.current) return
 
       navigator.sendBeacon(
         `/api/result/delete`,
@@ -69,6 +70,7 @@ export default function ResultPage({
   const handleRedir = async () => {
     try {
       hasNavigatedAway.current = true
+      if (!slug) return
       await deleteUserAnswersAction(slug as string)
       router.push("/dashboard")
     } catch (error) {
@@ -155,9 +157,9 @@ export default function ResultPage({
                 )}
               >
                 {passed ? (
-                  <Check size={36} strokeWidth={3} />
+                  <Check size={36} strokeWidth={3} aria-label="Passed" />
                 ) : (
-                  <X size={36} strokeWidth={3} />
+                  <X size={36} strokeWidth={3} aria-label="Failed" />
                 )}
               </span>
             </div>

@@ -10,7 +10,7 @@ import type {
 } from "@/validations/leaderboard.schema"
 import { cookies } from "next/headers"
 
-export async function getTop3(): Promise<LeaderboardEntry[] | null> {
+export async function getTop3(): Promise<LeaderboardEntry[]> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -20,7 +20,13 @@ export async function getTop3(): Promise<LeaderboardEntry[] | null> {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -36,7 +42,7 @@ export async function getTop3(): Promise<LeaderboardEntry[] | null> {
   }
 }
 
-export async function getUserRank(): Promise<UserRank | null> {
+export async function getUserRank(): Promise<UserRank> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -46,7 +52,13 @@ export async function getUserRank(): Promise<UserRank | null> {
       cache: "no-store",
     })
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()
@@ -67,7 +79,7 @@ export async function getUserRank(): Promise<UserRank | null> {
 export async function getLeaderBoard(
   page: number,
   limit: number
-): Promise<Leaderboard | null> {
+): Promise<Leaderboard> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
@@ -80,7 +92,13 @@ export async function getLeaderBoard(
       }
     )
     if (!res.ok) {
-      const { message } = await res.json()
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
       throw new Error(message)
     }
     const { data } = await res.json()

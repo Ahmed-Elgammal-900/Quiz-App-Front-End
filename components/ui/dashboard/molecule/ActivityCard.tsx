@@ -67,7 +67,7 @@ export default function ActivityCard({
             <h4 className="text-sm">{title}</h4>
             <div className="flex items-center">
               <p className="text-xs text-muted-foreground">
-                progress: {Math.floor(progress ?? 0)}
+                progress: {Math.floor(progress ?? 0)}%
               </p>
               <span className="mx-1 size-1 rounded-full bg-muted-foreground" />
               <p className="text-xs text-muted-foreground">

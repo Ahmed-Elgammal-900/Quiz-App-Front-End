@@ -19,7 +19,7 @@ export default function QuizQuestion({
       </h2>
       <div className="flex flex-col gap-5">
         {question.answers.map((answer) => (
-          <React.Fragment key={answer.id}>
+          <div className="relative" key={answer.id}>
             <Input
               type="radio"
               id={`answer-${answer.id}`}
@@ -42,7 +42,7 @@ export default function QuizQuestion({
             >
               {answer.text}
             </Label>
-          </React.Fragment>
+          </div>
         ))}
       </div>
     </div>
