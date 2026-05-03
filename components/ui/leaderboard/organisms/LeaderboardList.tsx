@@ -1,4 +1,4 @@
-import { getLeaderBoard } from "@/services/leadrboard.service"
+import { getLeaderBoard } from "@/services/leaderboard.service"
 import Pagination from "../molecules/Pagination"
 import UserRank from "../molecules/UserRank"
 

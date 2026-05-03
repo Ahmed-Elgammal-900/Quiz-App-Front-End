@@ -103,7 +103,7 @@ export default function ResultPage({
                   <h2 className="font-bold md:ms-3 md:mb-3 md:text-xl">
                     {title}
                   </h2>
-                  <p className="hidden items-center justify-between gap-3 rounded-full bg-muted px-5 py-3 md:flex">
+                  <div className="hidden items-center justify-between gap-3 rounded-full bg-muted px-5 py-3 md:flex">
                     <span className="font-bold text-primary md:text-2xl">
                       {score}%
                     </span>
@@ -111,7 +111,7 @@ export default function ResultPage({
                     <span className="text-sm font-semibold">
                       {correctAnswers} / {totalQuestions} correct
                     </span>
-                  </p>
+                  </div>
                 </div>
               </div>
               <div>

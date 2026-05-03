@@ -87,7 +87,7 @@ export default function QuizClient({
   }, [slug, userReady])
 
   useEffect(() => {
-    if (!userReady || quizStatus !== QuizStatus.PASSED) return
+    if (!userReady || quizStatus === QuizStatus.PASSED) return
     let cancelled = false
     const startQuiz = async () => {
       if (cancelled) return

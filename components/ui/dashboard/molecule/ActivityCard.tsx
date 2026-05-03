@@ -66,10 +66,16 @@ export default function ActivityCard({
           <div>
             <h4 className="text-sm">{title}</h4>
             <div className="flex items-center">
-              <p className="text-xs text-muted-foreground">
-                progress: {Math.floor(progress ?? 0)}%
-              </p>
-              <span className="mx-1 size-1 rounded-full bg-muted-foreground" />
+              {(status === QuizStatus.IN_PROGRESS ||
+                status === QuizStatus.PAUSED) &&
+                !passed && (
+                  <>
+                    <p className="text-xs text-muted-foreground">
+                      progress: {Math.floor(progress ?? 0)}%
+                    </p>
+                    <span className="mx-1 size-1 rounded-full bg-muted-foreground" />
+                  </>
+                )}
               <p className="text-xs text-muted-foreground">
                 {dayjs(attemptAt).fromNow()}
               </p>

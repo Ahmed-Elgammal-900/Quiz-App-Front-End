@@ -1,4 +1,4 @@
-import { getUserRank } from "@/services/leadrboard.service"
+import { getUserRank } from "@/services/leaderboard.service"
 import UserRank from "./UserRank"
 
 export default async function UserRankSection() {

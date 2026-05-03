@@ -1,4 +1,4 @@
-import { getTop3 } from "@/services/leadrboard.service"
+import { getTop3 } from "@/services/leaderboard.service"
 import UserChar from "../molecules/UserChar"
 
 export default async function Top3() {
