@@ -7,4 +7,4 @@ export const UserSchema = z.object({
   providers: z.array(z.string()),
 })
 
-export type User = z.infer<typeof UserSchema>
+export type UserSchemaType = z.infer<typeof UserSchema>

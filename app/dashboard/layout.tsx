@@ -25,7 +25,7 @@ export default async function DashboardLayout({
             <UserMenu />
           </header>
 
-          <main className="scrollbar flex-1 overflow-y-auto px-4 py-4 md:px-5 lg:py-6 lg:ps-6">
+          <main className="flex-1 overflow-y-auto px-4 py-4 md:px-5 lg:py-6 lg:ps-6">
             {children}
           </main>
           <MobileNav />

@@ -7,6 +7,11 @@ import UserRankSection from "@/components/ui/leaderboard/molecules/UserRankSecti
 import UserRankSectionSkeleton from "@/components/ui/leaderboard/molecules/UserRankSectionSkeleton"
 import { redirect } from "next/navigation"
 import { Suspense } from "react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Leaderboard",
+}
 
 export default async function Leaderboard({
   searchParams,

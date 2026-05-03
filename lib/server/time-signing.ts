@@ -9,9 +9,12 @@ export function signTime(timeInSeconds: number): string {
   return `${time}.${sig}`
 }
 
-export function verifyTime(signed: string): number | null {
+export function verifyTime(signed: string | undefined): number | null {
   const SECRET = process.env.PARAM_SECRET
   if (!SECRET) throw new Error("PARAM_SECRET is not set")
+  if (!signed) {
+    return null
+  }
   const [time, sig] = signed.split(".")
   if (!time || !sig) return null
 

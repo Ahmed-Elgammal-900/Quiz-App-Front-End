@@ -1,4 +1,4 @@
-import { StatCardProps } from "@/types/dashboard.types"
+import type { StatCardProps } from "@/types/dashboard.types"
 import { cva } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 

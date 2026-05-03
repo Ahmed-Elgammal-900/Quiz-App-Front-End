@@ -4,7 +4,7 @@ import { statsConfig } from "@/config/stats.config"
 
 export default async function StatCards() {
   const stats = await getStats()
-
+  if(!stats) throw new Error("not found stats")
   const grouped = Object.groupBy(statsConfig, (c) => c.group ?? c.property)
 
   return (

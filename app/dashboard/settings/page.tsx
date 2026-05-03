@@ -3,6 +3,11 @@ import DeleteAccount from "@/components/ui/settings/molecules/DeleteAccount"
 import Preference from "@/components/ui/settings/molecules/Preferences"
 import SettingsHeader from "@/components/ui/settings/atoms/SettingsHeader"
 import UserInfo from "@/components/ui/settings/molecules/UserInfo"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "settings",
+}
 
 export default function Settings() {
   return (

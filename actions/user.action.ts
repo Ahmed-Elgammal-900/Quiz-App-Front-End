@@ -11,6 +11,7 @@ export async function deleteUserAction(): Promise<{
   const cookie = await cookies()
   try {
     const res = await deleteUser()
+    if (!res) return { success: false, message: "Unauthorized action" }
     const setCookieHeader = res.headers.get("set-cookie")
 
     if (setCookieHeader) {

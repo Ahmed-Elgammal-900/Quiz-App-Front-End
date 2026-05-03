@@ -2,14 +2,20 @@ import { getActivities } from "@/services/dashboard.service"
 import ActivityCard from "../molecule/ActivityCard"
 import { ScrollArea } from "../../system/scroll-area"
 import { signTime } from "@/lib/server/time-signing"
+import { signStatus } from "@/lib/server/sign-status"
+import { QuizStatus } from "@/constants/quiz-status.constant"
 
 export default async function RecentActivity() {
   const activities = await getActivities()
+  if (!activities) return null
   const signedActivities = activities.map((activity) => ({
     ...activity,
     signedTime: signTime(
-      activity.remainingTimeSeconds ?? activity.quiz.timeInSeconds
+      activity.remainingTimeSeconds || activity.quiz.timeInSeconds
     ),
+    signedStatus: activity.status
+      ? signStatus(activity.passed ? QuizStatus.PASSED : activity.status)
+      : "",
   }))
   return (
     <div className="w-full pb-7 lg:mt-5 lg:w-[60%] lg:pb-5">
@@ -38,24 +44,26 @@ export default async function RecentActivity() {
                   questionsCount,
                 },
                 attemptAt,
-                score,
                 status,
                 passed,
                 remainingTimeSeconds,
                 signedTime,
+                signedStatus,
+                progress,
               }) => (
                 <ActivityCard
                   key={id}
                   title={title}
                   attemptAt={attemptAt}
-                  score={score}
                   status={status}
                   passed={passed}
                   quizId={quizId}
                   description={description}
-                  timeInSeconds={remainingTimeSeconds ?? timeInSeconds}
+                  timeInSeconds={remainingTimeSeconds || timeInSeconds}
                   questionsCount={questionsCount}
                   signedTime={signedTime}
+                  signedStatus={signedStatus}
+                  progress={progress}
                 />
               )
             )

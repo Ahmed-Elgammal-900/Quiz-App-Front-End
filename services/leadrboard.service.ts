@@ -11,15 +11,23 @@ import type {
 import { cookies } from "next/headers"
 
 export async function getTop3(): Promise<LeaderboardEntry[]> {
-  const cookie = await cookies()
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/top-three`, {
-      headers: { Cookie: cookie.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
+      throw new Error(message)
     }
     const { data } = await res.json()
 
@@ -35,15 +43,23 @@ export async function getTop3(): Promise<LeaderboardEntry[]> {
 }
 
 export async function getUserRank(): Promise<UserRank> {
-  const cookie = await cookies()
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/my-rank`, {
-      headers: { Cookie: cookie.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
+      throw new Error(message)
     }
     const { data } = await res.json()
 
@@ -64,18 +80,26 @@ export async function getLeaderBoard(
   page: number,
   limit: number
 ): Promise<Leaderboard> {
-  const cookie = await cookies()
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/leaderboard?page=${page}&limit=${limit}`,
       {
-        headers: { Cookie: cookie.toString() },
+        headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
       }
     )
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
+      throw new Error(message)
     }
     const { data } = await res.json()
 

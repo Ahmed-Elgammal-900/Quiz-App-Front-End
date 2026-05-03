@@ -1,4 +1,4 @@
-import { type VariantProps } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority"
 import { Skeleton } from "@/components/ui/system/skeleton"
 import { statCard } from "./StatCard"
 

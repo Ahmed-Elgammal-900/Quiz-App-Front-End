@@ -1,16 +1,5 @@
+import type { ModalData } from "@/types/quiz-modal-hook.types"
 import { useState, useCallback } from "react"
-
-interface ModalData {
-  title: string
-  score: number | null
-  questionsCount: number
-  status: string | null
-  passed: boolean | null
-  timeInSeconds: number
-  description: string
-  quizId: string
-  signedTime: string
-}
 
 export function useQuizModal() {
   const [open, setOpen] = useState(false)

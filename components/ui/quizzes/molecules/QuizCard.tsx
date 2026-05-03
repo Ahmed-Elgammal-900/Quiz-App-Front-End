@@ -7,10 +7,10 @@ import { QuizStatus } from "@/constants/quiz-status.constant"
 import { QuizStatusBadge } from "../../dashboard/atom/QuizStatusBadge"
 import { useQuizModal } from "@/hooks/useQuizModal"
 import { QuizModal } from "./QuizModal"
+import type { QuizCardProps } from "@/types/quizzes.types"
 
 export default function QuizCard({
   title,
-  score,
   questionsCount,
   status,
   passed,
@@ -18,27 +18,23 @@ export default function QuizCard({
   description,
   quizId,
   signedTime,
-}: {
-  title: string
-  score: number | null
-  questionsCount: number
-  status: string | null
-  passed: boolean | null
-  timeInSeconds: number
-  description: string
-  quizId: string
-  signedTime: string
-}) {
+  signedStatus,
+  progress,
+}: QuizCardProps) {
   const { open, data, openModal, closeModal } = useQuizModal()
+
   const quizConfig = quizzesConfig[title]
+
   if (!quizConfig) throw new Error(`Invalid quiz config for ${title}`)
-  const buttonConfig = buttonQuizConfig[status as QuizStatus]
+
+  const buttonConfig =
+    buttonQuizConfig[passed ? QuizStatus.PASSED : (status as QuizStatus)]
+
   const { icon: Icon, iconColor, bgColor } = quizConfig
 
   const handleOpen = () =>
     openModal({
       title,
-      score,
       questionsCount,
       status,
       passed,
@@ -46,7 +42,10 @@ export default function QuizCard({
       description,
       quizId,
       signedTime,
+      signedStatus,
+      progress,
     })
+
   return (
     <>
       <div
@@ -93,17 +92,20 @@ export default function QuizCard({
           <List />
           <span className="font-semibold">{questionsCount} Questions</span>
         </p>
-        {status === QuizStatus.IN_PROGRESS && (
-          <div className="my-5 hidden md:block">
-            <span className="text-primary capitalize">progress: {score}%</span>
-            <div className="mt-5 h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
-              <div
-                style={{ width: `${score}%` }}
-                className="animate-grow h-full rounded-full bg-primary"
-              />
+        {(status === QuizStatus.IN_PROGRESS || status === QuizStatus.PAUSED) &&
+          !passed && (
+            <div className="my-5 hidden md:block">
+              <span className="text-primary capitalize">
+                progress: {progress ?? 0}%
+              </span>
+              <div className="mt-5 h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+                <div
+                  style={{ width: `${progress ?? 0}%` }}
+                  className="animate-grow h-full rounded-full bg-primary"
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
         <Button
           className={cn(
             "mt-auto hidden h-10 hover:cursor-pointer md:block",

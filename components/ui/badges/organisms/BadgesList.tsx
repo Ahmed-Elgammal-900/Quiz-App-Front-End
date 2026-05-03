@@ -5,6 +5,7 @@ import { getBadges } from "@/services/dashboard.service"
 
 export default async function BadgesList() {
   const badges = await getBadges()
+  if (!badges) return null
   const badgeTitles = new Set(badges.map((badge) => badge.badgeTitle))
   return (
     <div className="mt-13">

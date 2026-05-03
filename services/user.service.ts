@@ -1,17 +1,26 @@
-import { UserSchema } from "@/validations/user.schema"
 import { cookies } from "next/headers"
+import { UserSchema } from "@/validations/user.schema"
+import type { UserSchemaType } from "@/validations/user.schema"
 
-export async function getUser() {
+export async function getUser(): Promise<UserSchemaType> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/user`, {
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
 
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
+      throw new Error(message)
     }
 
     const { data } = await res.json()
@@ -25,17 +34,25 @@ export async function getUser() {
   }
 }
 
-export async function deleteUser() {
+export async function deleteUser(): Promise<Response> {
   const cookieStore = await cookies()
+  const accessToken = cookieStore.get("access_token")?.value
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/user`, {
       method: "DELETE",
-      headers: { Cookie: cookieStore.toString() },
+      headers: { Cookie: `access_token=${accessToken}` },
     })
 
     if (!res.ok) {
-      const errorText = await res.text()
-      throw new Error(errorText)
+      let message = `Request failed with status ${res.status}`
+      try {
+        const body = await res.json()
+        if (body.message) message = `${body.message} (${res.status})`
+      } catch {
+        /* response wasn't JSON */
+      }
+      throw new Error(message)
     }
 
     return res

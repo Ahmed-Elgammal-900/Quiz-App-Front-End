@@ -15,7 +15,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
     const safePage = Math.min(totalPages, Math.max(1, newPage))
     const params = new URLSearchParams(searchParams.toString())
     params.set("page", String(safePage))
-    router.push(`?${params.toString()}`)
+    router.replace(`?${params.toString()}`)
   }
   return (
     <div className="flex items-center justify-center gap-x-2">
