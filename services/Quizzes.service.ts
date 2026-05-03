@@ -3,7 +3,7 @@ import {
   questionIdsSchema,
   QuizUserProgressSchema,
   QuizzesSchema,
-  resultSchema,
+  ResultSchema,
 } from "@/validations/quizzes.schema"
 import type {
   QuestionIds,
@@ -17,7 +17,7 @@ import { cookies } from "next/headers"
 export async function getQuizzes(): Promise<QuizzesResponse | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes`, {
       headers: { Cookie: `access_token=${accessToken}` },
@@ -46,7 +46,7 @@ export async function getQuizWithQuestions(
 ): Promise<QuizResponse | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/${quizId}/questions?page=${page}&limit=${limit}`,
@@ -79,7 +79,7 @@ export async function getQuizProgress(
 ): Promise<QuizProgress | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/${quizId}/progress?limit=${limit}`,
@@ -109,7 +109,7 @@ export async function getQuizProgress(
 export async function getResult(quizId: string): Promise<Result | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/${quizId}/get-result`,
@@ -124,7 +124,7 @@ export async function getResult(quizId: string): Promise<Result | null> {
     }
     const { data } = await res.json()
 
-    const parsed = resultSchema.safeParse(data)
+    const parsed = ResultSchema.safeParse(data)
     if (!parsed.success)
       throw new Error(`Invalid result shape: ${parsed.error}`)
     return parsed.data
@@ -137,7 +137,7 @@ export async function getResult(quizId: string): Promise<Result | null> {
 export async function startQuiz(quizId: string) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/${quizId}/start`, {
       method: "POST",
@@ -160,7 +160,7 @@ export async function insertProgress(
 ) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/${quizId}/progress`,
@@ -192,7 +192,7 @@ export async function pauseQuiz(
 ) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/${quizId}/pause`, {
       method: "POST",
@@ -217,7 +217,7 @@ export async function getQuestionsIds(
 ): Promise<QuestionIds | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/${quizId}/questions/ids`,
@@ -247,7 +247,7 @@ export async function getQuestionsIds(
 export async function deleteUserAnswers(quizId: string) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/${quizId}/delete-user-answers`,

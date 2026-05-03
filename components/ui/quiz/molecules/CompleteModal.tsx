@@ -15,23 +15,19 @@ export default function CompleteModal({
   onFinish,
 }: CompleteModalProps) {
   return (
-    <>
-      <Dialog open={isFinished} onOpenChange={() => {}}>
-        <DialogContent showCloseButton={false}>
-          <DialogHeader>
-            <DialogTitle>
-              Completion
-            </DialogTitle>
-            <DialogDescription>
-              congrats you finished quiz go to see your record
-            </DialogDescription>
-          </DialogHeader>
+    <Dialog open={isFinished} onOpenChange={() => {}}>
+      <DialogContent showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>Completion</DialogTitle>
+          <DialogDescription>
+            Congrats — you finished the quiz. Go see your record.
+          </DialogDescription>
+        </DialogHeader>
 
-          <DialogFooter>
-            <Button onClick={onFinish}>Go</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+        <DialogFooter>
+          <Button onClick={onFinish}>Go</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }

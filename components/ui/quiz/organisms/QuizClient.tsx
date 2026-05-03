@@ -7,7 +7,7 @@ import {
   insertProgressAction,
   pauseQuizAction,
   startQuizAction,
-} from "@/actions/quiz.ctions"
+} from "@/actions/quiz.action"
 import QuestionMap from "../molecules/QuizMapQuestions"
 import PauseModal from "../molecules/PauseModal"
 import CompleteModal from "../molecules/CompleteModal"
@@ -37,40 +37,57 @@ export default function QuizClient({
   const searchParams = useSearchParams()
   const { slug } = useParams()
   const [userReady, setUserReady] = useState<boolean>(false)
-  const [timeout, setTimeout] = useState<boolean>(false)
+  const [isTimeout, setIsTimeout] = useState<boolean>(false)
   const [timerPaused, setTimerPaused] = useState(false)
+  const answersRef = useRef(answers)
+  const quizStatusRef = useRef(quizStatus)
 
   useEffect(() => {
     return () => {
       sessionStorage.removeItem(`quiz-status-${slug}`)
+      sessionStorage.removeItem(`quiz-time-${slug}`)
     }
   }, [slug])
 
   useEffect(() => {
+    answersRef.current = answers
+  }, [answers])
+
+  useEffect(() => {
+    quizStatusRef.current = quizStatus
+  }, [quizStatus])
+
+  useEffect(() => {
     if (!userReady) return
+
     const handleBeforeUnload = () => {
-      if (quizStatus === QuizStatus.PASSED) return
-      const remainingTimeSeconds = remainingTimeRef.current?.getRemaining()
-      const pausedAtQuestionIndex =
-        answers[answers.length - 1]?.questionIndex ?? 0
-      fetch(`/api/quiz/pause`, {
-        method: "POST",
-        keepalive: true,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          quizId: slug,
-          pausedAtQuestionIndex,
-          remainingTimeSeconds,
-        }),
-      })
+      if (quizStatusRef.current === QuizStatus.PASSED) return
+
+      const remainingTimeSeconds = remainingTimeRef.current?.getRemaining() ?? 0
+      const lastAnswer = answersRef.current[answersRef.current.length - 1]
+      const pausedAtQuestionIndex = lastAnswer?.questionIndex ?? 0
+
+      navigator.sendBeacon(
+        `/api/quiz/pause`,
+        new Blob(
+          [
+            JSON.stringify({
+              quizId: slug,
+              pausedAtQuestionIndex,
+              remainingTimeSeconds,
+            }),
+          ],
+          { type: "application/json" }
+        )
+      )
     }
 
     window.addEventListener("beforeunload", handleBeforeUnload)
     return () => window.removeEventListener("beforeunload", handleBeforeUnload)
-  }, [slug, answers, quizStatus, userReady])
+  }, [slug, userReady])
 
   useEffect(() => {
-    if (quizStatus !== QuizStatus.PASSED && userReady) return
+    if (!userReady || quizStatus !== QuizStatus.PASSED) return
     let cancelled = false
     const startQuiz = async () => {
       if (cancelled) return
@@ -86,7 +103,7 @@ export default function QuizClient({
     return () => {
       cancelled = true
     }
-  }, [userReady, quizStatus])
+  }, [userReady, quizStatus, slug])
 
   useEffect(() => {
     let cancelled = false
@@ -175,7 +192,7 @@ export default function QuizClient({
   const onPause = async () => {
     const remainingTime = remainingTimeRef.current?.getRemaining()
     const questionIndex = answers[answers.length - 1]?.questionIndex ?? 0
-    if (remainingTime === 0) setTimeout(true)
+    if (remainingTime === 0) setIsTimeout(true)
     try {
       await pauseQuizAction(
         slug as string,
@@ -237,9 +254,9 @@ export default function QuizClient({
   if (readyCounter !== 5 && quizStatus !== QuizStatus.PASSED)
     return <CounterPage counter={readyCounter} />
 
-  const offset =
-    ((Number(searchParams.get("page")) ?? 1) - 1) *
-    (Number(searchParams.get("limit")) ?? 10)
+  const page = Number(searchParams.get("page")) || 1
+  const limit = Number(searchParams.get("limit")) || 10
+  const offset = (page - 1) * limit
   const currentQuestion = quizDetails!.questions[currentIndex - offset]
   const isLast = currentIndex === quizDetails!.pagination.total - 1
   const isFinished =
@@ -267,7 +284,7 @@ export default function QuizClient({
             onFinish={onPause}
             storageKey={`quiz-time-${slug}`}
             timerPaused={timerPaused}
-            timeout={timeout}
+            timeout={isTimeout}
             isFinished={isFinished}
           />
         ) : null}
@@ -291,7 +308,7 @@ export default function QuizClient({
       />
 
       <CompleteModal isFinished={isFinished} onFinish={onComplete} />
-      <TimeoutModal isFinished={timeout} onFinish={onComplete} />
+      <TimeoutModal isFinished={isTimeout} onFinish={onComplete} />
 
       {currentQuestion ? (
         <QuizQuestion

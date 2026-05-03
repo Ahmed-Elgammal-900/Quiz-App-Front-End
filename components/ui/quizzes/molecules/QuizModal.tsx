@@ -33,9 +33,10 @@ export function QuizModal({
   const router = useRouter()
 
   const redirToQuiz = () => {
-    router.push(
-      `/quiz/${quizId}?${effectiveStatus !== QuizStatus.PASSED ? `time=${signedTime}` : ""}&status=${signedStatus ?? null}`
-    )
+    const params = new URLSearchParams()
+    if (effectiveStatus !== QuizStatus.PASSED) params.set("time", signedTime)
+    if (signedStatus) params.set("status", signedStatus)
+    router.push(`/quiz/${quizId}?${params.toString()}`)
   }
 
   const formatTime = (seconds: number) => {

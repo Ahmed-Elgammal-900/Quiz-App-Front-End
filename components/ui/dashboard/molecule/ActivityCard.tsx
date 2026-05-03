@@ -15,7 +15,6 @@ dayjs.extend(relativeTime)
 export default function ActivityCard({
   title,
   attemptAt,
-  score,
   status,
   passed,
   quizId,
@@ -68,7 +67,7 @@ export default function ActivityCard({
             <h4 className="text-sm">{title}</h4>
             <div className="flex items-center">
               <p className="text-xs text-muted-foreground">
-                score: {Math.floor(score)}
+                progress: {Math.floor(progress ?? 0)}
               </p>
               <span className="mx-1 size-1 rounded-full bg-muted-foreground" />
               <p className="text-xs text-muted-foreground">

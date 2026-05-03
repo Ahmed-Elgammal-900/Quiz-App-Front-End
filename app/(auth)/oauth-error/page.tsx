@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "oauth error",
+  title: "OAuth Error",
 }
 
 export default async function AuthError({

@@ -38,7 +38,7 @@ const QuizTimer = forwardRef<{ getRemaining: () => number }, QuizTimerProps>(
       return () => {
         clearInterval(interval)
       }
-    }, [remaining, timeout, timerPaused, isFinished])
+    }, [remaining, timeout, timerPaused, isFinished, storageKey, onFinish])
 
     useImperativeHandle(ref, () => ({
       getRemaining: () => remaining,

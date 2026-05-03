@@ -1,4 +1,4 @@
-import { HelpCircleIcon } from "lucide-react";
+import { HelpCircleIcon } from "lucide-react"
 
 export default function Loading() {
   return (
@@ -14,7 +14,13 @@ export default function Loading() {
           <p className="text-center text-xl">Prepare Quiz For You</p>
         </div>
 
-        <div className="size-13 animate-spin rounded-full border-6 border-muted border-t-primary" />
+        <div
+          role="status"
+          aria-label="Loading quiz"
+          className="size-13 animate-spin rounded-full border-6 border-muted border-t-primary"
+        >
+          <span className="sr-only">Loading quiz…</span>
+        </div>
       </div>
     </div>
   )

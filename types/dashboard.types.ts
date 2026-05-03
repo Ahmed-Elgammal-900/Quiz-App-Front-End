@@ -12,7 +12,6 @@ export interface BadgeProps {
 export interface ActivityCardProps {
   title: string
   attemptAt: Date | string
-  score: number
   status: QuizStatus
   passed: boolean
   quizId: string

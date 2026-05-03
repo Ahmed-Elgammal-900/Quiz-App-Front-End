@@ -16,7 +16,7 @@ const fontMono = Geist_Mono({
 export const metadata: Metadata = {
   title: { template: "%s | Quizzer", default: "Quizzer" },
   description:
-    "a Quiz platform to gain experience and compete with other users",
+    "A quiz platform to gain experience and compete with other users",
 }
 
 export default async function RootLayout({

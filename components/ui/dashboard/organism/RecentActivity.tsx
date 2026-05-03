@@ -44,7 +44,6 @@ export default async function RecentActivity() {
                   questionsCount,
                 },
                 attemptAt,
-                score,
                 status,
                 passed,
                 remainingTimeSeconds,
@@ -56,7 +55,6 @@ export default async function RecentActivity() {
                   key={id}
                   title={title}
                   attemptAt={attemptAt}
-                  score={score ?? 0}
                   status={status}
                   passed={passed}
                   quizId={quizId}

@@ -17,8 +17,8 @@ export default function ExitModal({ onExit }: ExitModalProps) {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
-        <X />
+      <Button onClick={() => setOpen(true)} aria-label="Exit quiz">
+        <X aria-hidden="true" focusable="false" />
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>

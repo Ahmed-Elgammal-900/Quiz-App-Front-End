@@ -52,7 +52,7 @@ export const GetQuizResponseSchema = z.object({
   pagination: PaginationSchema,
 })
 
-export const resultSchema = z.object({
+export const ResultSchema = z.object({
   quizTitle: z.string(),
   score: z.int(),
   status: z.string(),
@@ -61,13 +61,13 @@ export const resultSchema = z.object({
   totalQuestions: z.int(),
   timeTaken: z.int(),
 })
-export const GetQuizResultSchema = GetQuizResponseSchema.nullable()
+export const GetQuizSchema = GetQuizResponseSchema.nullable()
 
 export const questionIdsSchema = z.array(z.uuid())
 
-export type Result = z.infer<typeof resultSchema>
+export type Result = z.infer<typeof ResultSchema>
 export type QuestionIds = z.infer<typeof questionIdsSchema>
-export type QuizResponse = z.infer<typeof GetQuizResultSchema>
+export type QuizResponse = z.infer<typeof GetQuizSchema>
 export type SafeQuestion = z.infer<typeof SafeQuestionSchema>
 export type Answer = z.infer<typeof SafeAnswerSchema>
 export type Pagination = z.infer<typeof PaginationSchema>

@@ -10,7 +10,7 @@ import type { Stats, Badge, Activity } from "@/validations/dashboard.schema"
 export async function getStats(): Promise<Stats | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/stats`, {
       headers: { Cookie: `access_token=${accessToken}` },
@@ -33,7 +33,7 @@ export async function getStats(): Promise<Stats | null> {
 export async function getBadges(): Promise<Badge[] | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/earned-badges`, {
       headers: { Cookie: `access_token=${accessToken}` },
@@ -57,7 +57,7 @@ export async function getBadges(): Promise<Badge[] | null> {
 export async function getActivities(): Promise<Activity | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/activities`, {
       headers: { Cookie: `access_token=${accessToken}` },

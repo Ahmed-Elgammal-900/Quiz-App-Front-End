@@ -22,13 +22,13 @@ export default function QuizQuestion({
           <React.Fragment key={answer.id}>
             <Input
               type="radio"
-              id={`answer-${answer.text}`}
+              id={`answer-${answer.id}`}
               name="option"
               checked={selectedOption === answer.id}
               value={answer.text}
               onChange={() => onAnswer(answer.id)}
               disabled={quizStatus === QuizStatus.PASSED}
-              className="hidden"
+              className="sr-only"
             />
             <Label
               className={cn(
@@ -38,7 +38,7 @@ export default function QuizQuestion({
                   : "border-gray-300 bg-card text-black dark:text-white",
                 quizStatus === QuizStatus.PASSED && "cursor-default"
               )}
-              htmlFor={`answer-${answer.text}`}
+              htmlFor={`answer-${answer.id}`}
             >
               {answer.text}
             </Label>

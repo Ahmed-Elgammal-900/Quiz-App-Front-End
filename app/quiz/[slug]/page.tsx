@@ -30,14 +30,16 @@ export default async function QuizPage({
   let verifiedTime
   let verifiedStatus
 
-  const quizProgress = await getQuizProgress(slug, Number(limit ?? 10))
+  const parsedLimit = Number.isFinite(Number(limit)) ? Number(limit) : 10
+  const parsedPage = Number.isFinite(Number(page)) ? Number(page) : undefined
+  const quizProgress = await getQuizProgress(slug, parsedLimit)
 
   const [questionsIds, quizDetails] = await Promise.all([
     getQuestionsIds(slug),
     getQuizWithQuestions(
       slug,
-      Number(page ?? quizProgress?.currentPage ?? 1),
-      Number(limit ?? 10)
+      parsedPage ?? quizProgress?.currentPage ?? 1,
+      parsedLimit
     ),
   ])
 

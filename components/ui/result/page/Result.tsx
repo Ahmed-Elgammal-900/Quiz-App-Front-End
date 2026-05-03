@@ -14,9 +14,9 @@ import { Button } from "../../system/button"
 import { QuizStatus } from "@/constants/quiz-status.constant"
 import { ResultProps } from "@/types/result.types"
 import { useParams, useRouter } from "next/navigation"
-import { deleteUserAnswersAction } from "@/actions/quiz.ctions"
+import { deleteUserAnswersAction } from "@/actions/quiz.action"
 import { quizzesConfig } from "@/config/quizzes.config"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 export default function ResultPage({
   status,
@@ -27,6 +27,7 @@ export default function ResultPage({
   timeTaken,
   title,
 }: ResultProps) {
+  const hasNavigatedAway = useRef(false)
   const router = useRouter()
   const { slug } = useParams()
   const config = quizzesConfig[title]
@@ -36,15 +37,17 @@ export default function ResultPage({
   const { icon: Icon, iconColor, bgColor } = config
 
   useEffect(() => {
+    if (!slug) return
+
     const handleBeforeUnload = () => {
-      fetch(`/api/result/delete`, {
-        method: "DELETE",
-        keepalive: true,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          quizId: slug,
-        }),
-      })
+      if (!hasNavigatedAway.current) return
+
+      navigator.sendBeacon(
+        `/api/result/delete`,
+        new Blob([JSON.stringify({ quizId: slug })], {
+          type: "application/json",
+        })
+      )
     }
 
     window.addEventListener("beforeunload", handleBeforeUnload)
@@ -65,16 +68,17 @@ export default function ResultPage({
 
   const handleRedir = async () => {
     try {
+      hasNavigatedAway.current = true
       await deleteUserAnswersAction(slug as string)
       router.push("/dashboard")
     } catch (error) {
-      console.error("can't delete user answers")
+      console.error("can't delete user answers", error)
     }
   }
 
   return (
     <div>
-      <div className="mx-auto mt-10 md:mt-15 max-w-2xl px-5">
+      <div className="mx-auto mt-10 max-w-2xl px-5 md:mt-15">
         <div className="flex items-center justify-center gap-3 text-center">
           <div className="flex h-16 w-16 flex-col items-center justify-center rounded-full bg-primary text-primary-foreground">
             <HelpCircleIcon size={30} />

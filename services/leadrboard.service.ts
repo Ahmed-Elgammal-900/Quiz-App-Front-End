@@ -13,7 +13,7 @@ import { cookies } from "next/headers"
 export async function getTop3(): Promise<LeaderboardEntry[] | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/top-three`, {
       headers: { Cookie: `access_token=${accessToken}` },
@@ -39,7 +39,7 @@ export async function getTop3(): Promise<LeaderboardEntry[] | null> {
 export async function getUserRank(): Promise<UserRank | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/quizzes/my-rank`, {
       headers: { Cookie: `access_token=${accessToken}` },
@@ -70,7 +70,7 @@ export async function getLeaderBoard(
 ): Promise<Leaderboard | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
       `${process.env.API_URL}/quizzes/leaderboard?page=${page}&limit=${limit}`,

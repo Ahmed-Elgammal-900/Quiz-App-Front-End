@@ -5,7 +5,7 @@ import type { UserSchemaType } from "@/validations/user.schema"
 export async function getUser(): Promise<UserSchemaType | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/user`, {
       headers: { Cookie: `access_token=${accessToken}` },
@@ -31,7 +31,7 @@ export async function getUser(): Promise<UserSchemaType | null> {
 export async function deleteUser(): Promise<Response | null> {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
-  if (!accessToken) return null
+  if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(`${process.env.API_URL}/user`, {
       method: "DELETE",

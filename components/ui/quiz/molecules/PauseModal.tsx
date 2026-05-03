@@ -26,8 +26,9 @@ export default function PauseModal({
           setOpen(true)
           setTimerPaused(true)
         }}
+        aria-label="Pause quiz"
       >
-        <Pause />
+        <Pause aria-hidden="true" focusable="false" />
       </Button>
 
       <Dialog
