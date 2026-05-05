@@ -70,7 +70,6 @@ flowchart TD
 
 The Project use REST-API built with Nest JS [Back-End Repo](https://github.com/Ahmed-Elgammal-900/Quiz-App-Back-End)
 
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -92,35 +91,40 @@ pnpm install
 cp .env.local
 ```
 
-| Variable       | Description                 |
-| -------------- | --------------------------- |
-| `API_URL`      | Backend API base URL        |
-| `PARAM_SECRET` | Secret for property signing |
+| Variable              | Description                 |
+| --------------------- | --------------------------- |
+| `NEXT_PUBLIC_API_URL` | Backend API base URL        |
+| `PARAM_SECRET`        | Secret for property signing |
 
 ### Run Locally
 
 ```bash
 pnpm dev
 ```
+
 ---
 
 ## 📸 Screenshots
 
 ### Dashboard
+
 ![Quizzer Dashboard](./public/images/dashboard.png)
 
-### Quizzes 
+### Quizzes
+
 ![Quizzer Quizzes](./public/images/quizzes.png)
 
 ### Badges
+
 ![Quizzer Badges](./public/images/badges.png)
 
 ### Leaderboard
+
 ![Quizzer Leaderboard](./public/images/leaderboard.png)
 
 ### Settings
-![Quizzer Settings](./public/images/settings.png)
----
+
+## ![Quizzer Settings](./public/images/settings.png)
 
 ## ⚙️ CI/CD
 

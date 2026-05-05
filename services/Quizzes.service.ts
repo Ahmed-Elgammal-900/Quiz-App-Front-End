@@ -19,7 +19,7 @@ export async function getQuizzes(): Promise<QuizzesResponse> {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quizzes`, {
       headers: { Cookie: `access_token=${accessToken}` },
       cache: "no-store",
     })
@@ -59,7 +59,7 @@ export async function getQuizWithQuestions(
     if (limit !== undefined) params.set("limit", String(limit))
     const qs = params.toString() ? `?${params.toString()}` : ""
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/questions${qs}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/questions${qs}`,
       {
         headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
@@ -98,7 +98,7 @@ export async function getQuizProgress(
   if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/progress?limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/progress?limit=${limit}`,
       {
         headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
@@ -134,7 +134,7 @@ export async function getResult(quizId: string): Promise<Result> {
   if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/get-result`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/get-result`,
       {
         headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
@@ -167,11 +167,14 @@ export async function startQuiz(quizId: string) {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/${quizId}/start`, {
-      method: "POST",
-      headers: { Cookie: `access_token=${accessToken}` },
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/start`,
+      {
+        method: "POST",
+        headers: { Cookie: `access_token=${accessToken}` },
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
@@ -197,7 +200,7 @@ export async function insertProgress(
   if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/progress`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/progress`,
       {
         method: "POST",
         headers: {
@@ -234,15 +237,18 @@ export async function pauseQuiz(
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/${quizId}/pause`, {
-      method: "POST",
-      headers: {
-        Cookie: `access_token=${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ pausedAtQuestionIndex, remainingTimeSeconds }),
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/pause`,
+      {
+        method: "POST",
+        headers: {
+          Cookie: `access_token=${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pausedAtQuestionIndex, remainingTimeSeconds }),
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
@@ -264,7 +270,7 @@ export async function getQuestionsIds(quizId: string): Promise<QuestionIds> {
   if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/questions/ids`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/questions/ids`,
       {
         headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
@@ -300,7 +306,7 @@ export async function deleteUserAnswers(quizId: string) {
   if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/${quizId}/delete-user-answers`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/${quizId}/delete-user-answers`,
       {
         method: "DELETE",
         headers: {

@@ -12,10 +12,13 @@ export async function getStats(): Promise<Stats> {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/stats`, {
-      headers: { Cookie: `access_token=${accessToken}` },
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/stats`,
+      {
+        headers: { Cookie: `access_token=${accessToken}` },
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
@@ -41,10 +44,13 @@ export async function getBadges(): Promise<Badge[]> {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/earned-badges`, {
-      headers: { Cookie: `access_token=${accessToken}` },
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/earned-badges`,
+      {
+        headers: { Cookie: `access_token=${accessToken}` },
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
@@ -71,10 +77,13 @@ export async function getActivities(): Promise<Activity> {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/activities`, {
-      headers: { Cookie: `access_token=${accessToken}` },
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/activities`,
+      {
+        headers: { Cookie: `access_token=${accessToken}` },
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
