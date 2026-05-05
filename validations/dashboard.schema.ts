@@ -30,7 +30,11 @@ export const ActivitySchema = z.array(
   z.object({
     id: z.string(),
     status: z.enum(Object.values(QuizStatus) as [QuizStatus, ...QuizStatus[]]),
-    score: z.int().nullable(),
+    score: z.coerce
+      .number()
+      .transform(Math.round)
+      .pipe(z.number().int())
+      .nullable(),
     passed: z.boolean(),
     attemptAt: z.date().or(z.iso.datetime()),
     progress: z.int().nullable(),
