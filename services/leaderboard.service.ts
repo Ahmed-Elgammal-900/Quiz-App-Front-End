@@ -15,10 +15,13 @@ export async function getTop3(): Promise<LeaderboardEntry[]> {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/top-three`, {
-      headers: { Cookie: `access_token=${accessToken}` },
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/top-three`,
+      {
+        headers: { Cookie: `access_token=${accessToken}` },
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
@@ -47,10 +50,13 @@ export async function getUserRank(): Promise<UserRank> {
   const accessToken = cookieStore.get("access_token")?.value
   if (!accessToken) throw new Error("Unauthenticated")
   try {
-    const res = await fetch(`${process.env.API_URL}/quizzes/my-rank`, {
-      headers: { Cookie: `access_token=${accessToken}` },
-      cache: "no-store",
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/my-rank`,
+      {
+        headers: { Cookie: `access_token=${accessToken}` },
+        cache: "no-store",
+      }
+    )
     if (!res.ok) {
       let message = `Request failed with status ${res.status}`
       try {
@@ -85,7 +91,7 @@ export async function getLeaderBoard(
   if (!accessToken) throw new Error("Unauthenticated")
   try {
     const res = await fetch(
-      `${process.env.API_URL}/quizzes/leaderboard?page=${page}&limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/quizzes/leaderboard?page=${page}&limit=${limit}`,
       {
         headers: { Cookie: `access_token=${accessToken}` },
         cache: "no-store",
