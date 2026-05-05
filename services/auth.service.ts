@@ -8,7 +8,7 @@ import {
 } from "@/validations/auth.schema"
 
 export async function login(body: LoginInput) {
-  return fetch(`${process.env.API_URL}/auth/login`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export async function login(body: LoginInput) {
 }
 
 export async function register(body: RegisterInput) {
-  return fetch(`${process.env.API_URL}/auth/signup`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export async function register(body: RegisterInput) {
 }
 
 export async function forgetPassword(body: ForgotPasswordInput) {
-  return fetch(`${process.env.API_URL}/auth/forget-password`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/forget-password`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export async function forgetPassword(body: ForgotPasswordInput) {
 }
 
 export async function resetPassword(body: ResetPasswordInput) {
-  return fetch(`${process.env.API_URL}/auth/reset-password`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export async function resetPassword(body: ResetPasswordInput) {
 }
 
 export async function verifyOtp(body: OtpInput & { id: string }) {
-  return fetch(`${process.env.API_URL}/auth/verify-email`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export async function verifyOtp(body: OtpInput & { id: string }) {
 }
 
 export async function resendOtp(body: { id: string }) {
-  return fetch(`${process.env.API_URL}/auth/resend-otp`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export async function changePassword(
   body: changePasswordInput,
   accessToken: NonNullable<string>
 ) {
-  return fetch(`${process.env.API_URL}/auth/change-password`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -82,21 +82,21 @@ export async function changePassword(
 }
 
 export async function verifyAccessToken(accessToken: NonNullable<string>) {
-  return fetch(`${process.env.API_URL}/auth/verify-access-token`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-access-token`, {
     method: "POST",
     headers: { Cookie: `access_token=${accessToken}` },
   })
 }
 
 export async function refreshTokens(refreshToken: NonNullable<string>) {
-  return fetch(`${process.env.API_URL}/auth/refresh-token`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
     method: "POST",
     headers: { Cookie: `refresh_token=${refreshToken}` },
   })
 }
 
 export async function logout(accessToken: NonNullable<string>) {
-  return fetch(`${process.env.API_URL}/auth/logout`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
     method: "POST",
     headers: { Cookie: `access_token=${accessToken}` },
   })
