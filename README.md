@@ -88,7 +88,7 @@ pnpm install
 ### Environment Variables
 
 ```bash
-cp .env.local
+touch .env.local
 ```
 
 | Variable              | Description                 |
