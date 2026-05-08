@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic"
 import WelcomeHeader from "@/components/ui/dashboard/molecule/WelcomeHeader"
 import StatsCardSkeleton from "@/components/ui/dashboard/organism/StatCardsSkeleton"
 import StatsCards from "@/components/ui/dashboard/organism/statCards"
