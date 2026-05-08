@@ -15,7 +15,7 @@ export async function GET(request: Request) {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/auth/exchange?code=${code}`
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/exchange?code=${code}`
     )
 
     if (!res.ok) {

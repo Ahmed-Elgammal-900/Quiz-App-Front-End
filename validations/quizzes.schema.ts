@@ -6,7 +6,11 @@ const QuizSchema = z.object({
   description: z.string(),
   questionsCount: z.number().int().min(0),
   timeInSeconds: z.int(),
-  score: z.int().nullable(),
+  score: z.coerce
+    .number()
+    .transform(Math.round)
+    .pipe(z.number().int())
+    .nullable(),
   progress: z.int().nullable(),
   status: z.string().nullable(),
   passed: z.boolean().nullable(),
