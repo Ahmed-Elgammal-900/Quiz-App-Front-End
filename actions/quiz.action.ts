@@ -24,10 +24,16 @@ export async function startQuizAction(
 export async function insertProgressAction(
   quizId: string,
   questionId: string,
-  selectedAnswerId: string
+  selectedAnswerId: string,
+  remainingTimeInSceonds?: number
 ): Promise<{ success: boolean; message?: string }> {
   try {
-    await insertProgress(quizId, questionId, selectedAnswerId)
+    await insertProgress(
+      quizId,
+      questionId,
+      selectedAnswerId,
+      remainingTimeInSceonds
+    )
     return { success: true }
   } catch (error) {
     console.error("Failed to insert progress", error)
