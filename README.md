@@ -124,7 +124,7 @@ pnpm dev
 
 ### Settings
 
-## ![Quizzer Settings](./public/images/settings.png)
+![Quizzer Settings](./public/images/settings.png)
 
 ## ⚙️ CI/CD
 
