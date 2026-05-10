@@ -58,7 +58,7 @@ export const GetQuizResponseSchema = z.object({
 
 export const ResultSchema = z.object({
   quizTitle: z.string(),
-  score: z.int(),
+  score: z.number(),
   status: z.string(),
   passed: z.boolean(),
   correctAnswers: z.int(),
