@@ -218,8 +218,25 @@ export default function QuizClient({
         },
       ]
     })
+
+    const isLastQuestionNotAnswered =
+      answers.length + 1 === quizDetails?.pagination.total
     try {
-      await insertProgressAction(slug as string, currentQuestion.id, optionId)
+      if (isLastQuestionNotAnswered) {
+        const remainingTime = remainingTimeRef.current?.getRemaining()
+        await insertProgressAction(
+          typeof slug === "string" ? slug : "",
+          currentQuestion.id,
+          optionId,
+          remainingTime
+        )
+      } else {
+        await insertProgressAction(
+          typeof slug === "string" ? slug : "",
+          currentQuestion.id,
+          optionId
+        )
+      }
     } catch (error) {
       console.error("Failed to save Answer", error)
     }

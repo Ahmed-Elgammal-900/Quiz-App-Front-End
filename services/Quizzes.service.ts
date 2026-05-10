@@ -193,7 +193,8 @@ export async function startQuiz(quizId: string) {
 export async function insertProgress(
   quizId: string,
   questionId: string,
-  selectedAnswerId: string
+  selectedAnswerId: string,
+  remainingTimeInSeconds?: number
 ) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get("access_token")?.value
@@ -207,7 +208,11 @@ export async function insertProgress(
           Cookie: `access_token=${accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ questionId, selectedAnswerId }),
+        body: JSON.stringify({
+          questionId,
+          selectedAnswerId,
+          remainingTimeInSeconds,
+        }),
         cache: "no-store",
       }
     )
