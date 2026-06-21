@@ -1,6 +1,6 @@
 <h1 align="center" style="padding: 20px 0">🧠 Quizzer — FrontEnd 📊</h1>
 
-> A full-featured quiz platform built with Next.js — take timed multiple-choice quizzes, earn badges, track your progress, and compete on the leaderboard.
+> A full-featured quiz platform built with Next.js. Take timed multiple-choice quizzes, earn badges, track your progress, and compete on the leaderboard.
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
