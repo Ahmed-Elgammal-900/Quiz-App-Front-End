@@ -14,22 +14,22 @@
 
 ## ✨ Features
 
-- **Timed Quizzes** — each quiz runs against a countdown timer
-- **Pause & Resume** — leave mid-quiz and pick up exactly where you left off
-- **Multiple Choice** — clean, keyboard-friendly answer selection
-- **Result Tracking** — every attempt is saved with score and time taken
-- **Badges** — earn achievements based on performance and streaks
-- **Leaderboard** — global rankings updated in real time
-- **Auth** — sign in with Google (OAuth) or email/password (JWT)
+- **Timed Quizzes:** each quiz runs against a countdown timer
+- **Pause & Resume:** leave mid-quiz and pick up exactly where you left off
+- **Multiple Choice:** clean, keyboard-friendly answer selection
+- **Result Tracking:** every attempt is saved with score and time taken
+- **Badges:** earn achievements based on performance and streaks
+- **Leaderboard:** global rankings updated in real time
+- **Auth:** sign in with Google (OAuth) or email/password (JWT)
 
 ## 🛠️ Key Features
 
-- **Responsive Design** — smooth experience across all devices, from desktop to mobile
-- **Dark Mode** — built-in theme switching
-- **Form Validation** — using React Hook Form and Zod
-- **Safe User Progress** — never lose progress with our automatic saving mechanism
-- **Atomic Design** — component architecture for easy reuse across the project
-- **Data Efficiency** — pagination applied throughout for optimal performance
+- **Responsive Design:** smooth experience across all devices, from desktop to mobile
+- **Dark Mode:** built-in theme switching
+- **Form Validation:** using React Hook Form and Zod
+- **Safe User Progress:** never lose progress with our automatic saving mechanism
+- **Atomic Design:** component architecture for easy reuse across the project
+- **Data Efficiency:** pagination applied throughout for optimal performance
 
 ## ⚡ Technical Highlights
 
