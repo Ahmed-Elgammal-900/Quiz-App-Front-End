@@ -34,7 +34,7 @@ export default function UserChar({
           </span>
         </div>
         <div className="mt-5 flex flex-col items-center justify-center">
-          <span className="font-bold capitalize">{name}</span>
+          <span className="font-bold text-center capitalize">{name}</span>
           <span className="mt-2 rounded-full bg-primary/10 px-4 py-2 font-semibold text-primary">
             {score}
           </span>
