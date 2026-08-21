@@ -1,8 +1,4 @@
-interface LeaderboardEntry {
-  userId: string
-  name: string
-  totalScore: number
-}
+import { LeaderboardEntry } from "@/validations/leaderboard.schema"
 
 export function getPodiumOrder(top3: LeaderboardEntry[]) {
   const withRank = top3.map((user, i) => ({ ...user, rank: i + 1 }))
